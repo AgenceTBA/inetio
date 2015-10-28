@@ -1,7 +1,7 @@
 angular.module('starter.service', [])
 
   .factory('User', function ($resource) {
-    return $resource('http://169.254.23.187:9000/api/users/:id/:controller', {
+    return $resource('http://inetio.coolcode.fr/api/users/:id/:controller', {
       id: '@_id'
     },
     {
@@ -57,7 +57,7 @@ angular.module('starter.service', [])
        * @return {Promise}
        */
       login: function(user, callback) {
-        return $http.post('http://169.254.23.187:9000/auth/local', {
+        return $http.post('http://inetio.coolcode.fr/auth/local', {
           email: user.email,
           password: user.password
         })

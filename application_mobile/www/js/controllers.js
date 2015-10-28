@@ -43,6 +43,8 @@ angular.module('starter.controllers', [])
 
 .controller('RaceCtrl', function($scope, Auth, $state, $http, $cordovaGeolocation) {
   $scope.user = Auth.getCurrentUser()
+
+
   $scope.refreshMap = function (lat, long) {
     var myLatlng = new google.maps.LatLng(lat, long);
       var mapOptions = {
@@ -57,7 +59,9 @@ angular.module('starter.controllers', [])
 
       var marker = new google.maps.Marker({
           position: myLatlng,
-          map: map
+          map: map,
+          icon: './img/been.png'
+
       });
       $scope.map = map;
   }
@@ -84,7 +88,7 @@ angular.module('starter.controllers', [])
     Auth.logout()
     $state.go("app.login")
   }
-  $http.get('http://169.254.23.187:9000/api/circuits').then(function (res){
+  $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
     $scope.listCircuit = res.data
   })
 $scope.currentPosition()
@@ -108,27 +112,6 @@ $scope.currentPosition()
     $scope.user = {};
     $scope.errors = {};
 
-
-/*
-    $scope.googleLogin = function() {
-        $cordovaOauth.google("951692337658-rqcr7022vdhqi5pggau4m2gjdbddsg20.apps.googleusercontent.com", [
-          "https://www.googleapis.com/auth/urlshortener",
-          "https://www.googleapis.com/auth/userinfo.email"
-          ]).then(function(result) {
-          var config = {
-            headers: {
-              'Authorization': "Bearer " + result.access_token
-            }
-          };
-
-          $http.get("http://169.254.23.187:9000/auth/google", config).then(function (res){
-            console.log(res)
-          })
-        }, function(error) {
-            console.log(error);
-        });
-    }
-*/
     $scope.googleLogin = function() {
         $cordovaOauth.google("951692337658-rqcr7022vdhqi5pggau4m2gjdbddsg20.apps.googleusercontent.com", [
           "https://www.googleapis.com/auth/urlshortener",
@@ -147,7 +130,7 @@ $scope.currentPosition()
                     google: res.data
                   }
                   $http({
-                      url: 'http://169.254.23.187:9000/api/users',
+                      url: 'http://inetio.coolcode.fr/api/users',
                       method: "POST",
                       data: { 'newGoogleUser' : newGoogleUser }
                   })
