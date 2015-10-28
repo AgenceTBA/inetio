@@ -1,0 +1,32 @@
+{
+  "author": "Ryan Fink",
+  "name": "angular-chrono",
+  "version": "0.0.5",
+  "homepage": "https://github.com/rfink/angular-chrono",
+  "description": "Angular-Timer : A simple AngularJS directive demonstrating re-usability & interoperability",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rfink/angular-chrono.git"
+  },
+  "dependencies": {
+    "angular": ">= 1.0.7"
+  },
+  "devDependencies": {
+    "angular-scenario": ">= 1.0.7",
+    "angular-mocks": ">= 1.0.7"
+  },
+  "main": "./dist/assets/angular-chrono.js",
+  "ignore": [
+    "./node_modules/"
+  ],
+  "_release": "0.0.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.5",
+    "commit": "497127bafcdd32e8696f1f9cba0a7041e7216c72"
+  },
+  "_source": "git://github.com/rfink/angular-chrono.git",
+  "_target": "~0.0.5",
+  "_originalSource": "angular-chrono",
+  "_direct": true
+}
