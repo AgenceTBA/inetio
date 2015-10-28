@@ -29,6 +29,9 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+  $scope.stop = function() {
+    chronoService.stop();
+  }
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
@@ -47,13 +50,16 @@ angular.module('starter.controllers', [])
     $scope.time = Date.now();
     chronoService.addTimer('myTimer', { interval: 500 });
     chronoService.start();
-  
+    $scope.racing = {
+      currentSpeed: 100
+    }
 
     var position = geoLocation.getGeolocation();
-
+    console.log(position)
     // listen location changes
     $rootScope.$on('location:change', function (position) {
       console.log("-----------------------------------------")
+      $scope.refreshMap(position.coords.latitude, position.coords.longitude)
       console.log(position)
       $scope.racing.currentSpeed = position.coords.speed
     });
@@ -75,6 +81,7 @@ angular.module('starter.controllers', [])
       $state.go('app.racemode')
     })
   }
+
   //FONCTION QUI GERE LA MAP
   $scope.refreshMap = function (lat, long) {
     var myLatlng = new google.maps.LatLng(lat, long);
@@ -96,6 +103,7 @@ angular.module('starter.controllers', [])
       $scope.map = map;
   }
   $scope.lat = 0
+  /*
   $scope.currentPosition = function () {
     var posOptions = {timeout: 10000, enableHighAccuracy: false};
     $cordovaGeolocation
@@ -109,11 +117,13 @@ angular.module('starter.controllers', [])
         if (err) console.log(err)
       });
   }
-
+*/
   //MAIN DE LA PAGE
   $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
     $scope.listCircuit = res.data
-    $scope.currentPosition()
+        $scope.refreshMap(position.lat, position.lng)
+      $scope.racing.currentSpeed = position.speed
+
   })
 })
 .controller('RaceCtrl', function($scope, Auth, $state, $http, $cordovaGeolocation, $localStorage) {

@@ -64,7 +64,7 @@ angular.module('starter', [
         var watch = $cordovaGeolocation.watchPosition({
             frequency: 1000,
             timeout: 3000,
-            enableHighAccuracy: false
+            enableHighAccuracy: true
         }).then(function () {
             }, function (err) {
                 // you need to enhance that point
