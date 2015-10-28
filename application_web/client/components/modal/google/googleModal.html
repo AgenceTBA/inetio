@@ -1,0 +1,27 @@
+<script type="text/ng-template" id="googleModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title" style="color: black">{{items.google.displayName}}</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li><label>Email: {{items.email}}</label></li>
+            <li><label>Sexe: {{items.google.gender}}</label></li>
+        </ul>
+        <h6>Liste des circuits auquels à participé: {{items.google.displayName}} </h6>
+        <p ng-if="items.session.length == 0">{{items.google.displayName}} n'a participé à aucune course </p>
+        <div ng-if="items.session.length != 0" ng-repeat="s in items.session">
+            <ul>
+                <li><label>Nom de la session: {{s.nom}}</label></li>
+                <li><label>Meilleurs Temps: {{s.bestTime}}</label></li>
+                <li><label>Vitesse Maximum: {{s.vMax}}</label></li>
+                <li><label>Nombre de tour: {{s.round}}</label></li>
+                <li><label>Angle de plus élevé: {{s.bestAngler}}</label></li>
+                <li><label>Derniere date: {{s.date}}</label></li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

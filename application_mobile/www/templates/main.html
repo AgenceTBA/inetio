@@ -1,0 +1,13 @@
+<ion-view view-title="Main">
+  <ion-content>
+    <ion-list>
+          <button class="button button-block button-positive" ng-click="signout()">Logout</button>
+    	<h1>Bienvenue : {{user.email}}</h3>
+            <div ng-if ="user.google"> <img src="{{user.google.image.url}}" /> </div>
+            <div ng-if ="!user.google">{{user.image}}</div>
+          <button class="button button-block button-positive" ng-click="go('app.race')">Start a Race</button>
+          <button class="button button-block button-positive" ng-click="go('profil')">Profil</button>
+          <button class="button button-block button-positive" ng-click="go('buildRace')">Build a race</button>
+    </ion-list>
+  </ion-content>
+</ion-view>

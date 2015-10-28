@@ -1,0 +1,16 @@
+<ion-view view-title="Main">
+  <ion-content>
+      <h1>Race: choose a circuit</h3>
+      <div class="card">
+        <div class="item item-text-wrap">
+          <div id="map" style="height:200px;" data-tap-disabled="true"></div>                
+        </div>
+      </div>
+      <ion-list>
+        <ion-item ng-repeat="circuit in listCircuit">
+          {{circuit.nom}}
+        </ion-item>
+      </ion-list>
+      <button class="button button-block button-positive" ng-click="go('app.race')">Start a Race</button>
+  </ion-content>
+</ion-view>

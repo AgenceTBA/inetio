@@ -1,0 +1,522 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+@import '../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+@import '../bower_components/bootstrap-social/bootstrap-social.scss';
+$fa-font-path: "../bower_components/font-awesome/fonts";
+@import '../bower_components/font-awesome/scss/font-awesome';
+
+/**
+ * App-wide Styles
+ */
+
+/*
+ * SMACSS + SCSS starter v2.1
+ * Inspired by SMACSS http://smacss.com
+ * Author: @jonathanpath
+ * Date: 4 August 2015
+ *
+ * https://github.com/jonathanpath/SASS-SMACSS
+ * See file structure in http://jonathanpath.com/sass+smacss/scss/style.scss
+ *
+ * Coding map-cars : https://github.com/necolas/idiomatic-css
+ *
+ */
+/* Site settings */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* Tools */
+/* ===========================
+   Tools/Helpers
+   =========================== */
+.border-box {
+  /* Safari/Chrome, other WebKit */
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */ }
+
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/*
+ * For IE 6/7 only
+ * Include this map-car to trigger hasLayout and contain floats.
+ */
+.clearfix {
+  *zoom: 1; }
+
+.is-inlineblockmiddle, .is-verticalalign:before {
+  display: inline-block;
+  vertical-align: middle; }
+
+.is-verticalalign:before {
+  content: '';
+  width: 0;
+  height: 100%;
+  margin-left: -0.25em; }
+
+/*Modules*/
+
+.link-seo {
+  position: relative; }
+  .link-seo a:before {
+    content: '';
+    position: absolute;
+    z-index: 3000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: transparent; }
+
+
+
+.navbar-default {
+	background-color: black;
+	color: white;
+}
+.navbar-default .navbar-nav > .active > a {
+	color: white;
+	background-color: black;
+}
+.navbar-default .navbar-nav > li > a {
+	color: white;
+}
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+/* Base */
+/* ===========================
+   Base
+   =========================== */
+body {
+  background: #EDEFF1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden; }
+
+a {
+  cursor: pointer; }
+
+button {
+  outline: none; }
+
+h1 {
+  font-family: 'Montserrat', sans-serif; }
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 50px; }
+
+h3 {
+  font-size: 0.875em;
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif; }
+  h3.underlined:after {
+    content: '';
+    display: block;
+    margin-top: 8px;
+    width: 46px;
+    height: 3px;
+    background-color: #EECA6D; }
+  h3.dark {
+    color: #24272C; }
+
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  color: #24272C; }
+
+p {
+  font-size: 1.125em;
+  font-family: "proxima_nova_rgregular"; }
+  p.content {
+    line-height: 30px; }
+  p.highlighted {
+    font-size: 1em;
+    line-height: 22px; }
+    p.highlighted:before {
+      content: '';
+      display: block;
+      margin-bottom: 15px;
+      width: 46px;
+      height: 3px;
+      background-color: #EECA6D; }
+
+input {
+  outline: none; }
+
+.container_large, footer .contacts > div {
+  width: 89.0625%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.container_medium {
+  width: 78.90625%;
+  max-width: 1010px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.container_small {
+  width: 70.3125%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.is-background {
+  width: 100%;
+  height: auto;
+}
+
+.text-up {
+  text-transform: uppercase; }
+
+/* ==|====================
+   Layout/Header
+   ======================= */
+header {
+  position: fixed;
+  z-index: 99999;
+  display: block;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: rgba(0,0,0,0.9);
+  transition: all 0.2s ease-in-out; }
+  header .header__wrapper {
+    position: relative; 
+}
+    header .header__logo__wrapper .header__logo {
+      width: 96px;
+      height: 24px;
+      position: absolute;
+      top: 28px;
+      left: 23px; }
+    header nav {
+    float: right; }
+    header nav img {
+      display: block;
+      width: 37px;
+      margin-left: auto;
+      margin-right: auto;
+      cursor: pointer; }
+    header nav > ul {
+      font-family: 'Montserrat', sans-serif; }
+      header nav > ul > li {
+        float: left;
+        text-transform: uppercase;
+        font-size: 0.875em;
+        height: 70px;
+        border-radius: 3px; }
+        header nav > ul > li:before {
+          content: '';
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle; }
+        header nav > ul > li > a {
+          text-decoration: none;
+          color: #fff;
+          padding: 0 44px;
+          z-index: 10;
+          display: inline-block;
+          vertical-align: middle; }
+
+.l-products {
+  overflow: hidden; }
+  .l-products section.l-products__intro {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; }
+    .l-products section.l-products__intro .l-products__intro__wrapper {
+      height: inherit;
+      position: relative; }
+      .l-products section.l-products__intro .l-products__intro__wrapper .wrapper {
+        display: inline-block;
+        vertical-align: middle;
+        width: 99%; }
+      .l-products section.l-products__intro .l-products__intro__wrapper svg {
+        position: absolute;
+        margin: 55px auto;
+        left: 0;
+        right: 0; }
+      .l-products section.l-products__intro .l-products__intro__wrapper .square-responsive {
+        display: none; }
+      .l-products section.l-products__intro .l-products__intro__wrapper h1 {
+        position: relative;
+        z-index: 300;
+        width: 99%;
+        margin-top: 34px;
+        font-size: 6.5625em;
+        color: #24272C;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.07); }
+      .l-products section.l-products__intro .l-products__intro__wrapper p {
+        font-family: 'Montserrat', sans-serif;
+        max-width: 890px;
+        width: 100%;
+        font-size: 0.875em;
+        color: #24272C;
+        text-align: center;
+        opacity: .7;
+        letter-spacing: 2px;
+        margin-top: 10px; }
+        .l-products section.l-products__intro .l-products__intro__wrapper p.warner {
+          top: 533px; }
+      .l-products section.l-products__intro .l-products__intro__wrapper:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 0;
+        height: inherit; }
+  .l-products section.l-products__presentation {
+    background-color: #24272C;
+    position: relative; }
+    .l-products section.l-products__presentation h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px; }
+    .l-products section.l-products__presentation h3 {
+      margin-bottom: 45px; }
+    .l-products section.l-products__presentation p.l-products__presentation__def {
+      color: #fff;
+      font-size: 1.625em;
+      line-height: 40px;
+      margin-bottom: 71px; }
+    .l-products section.l-products__presentation p.presentation__text {
+      color: #fff;
+      width: 400px;
+      display: inline-table;
+      line-height: 30px; }
+      .l-products section.l-products__presentation p.presentation__text.margin-left {
+        margin-left: 90px; }
+  .l-products .l-products__details h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.125em;
+    text-transform: none;
+    text-align: center;
+    margin-bottom: 23px; }
+  .l-products .l-products__details p {
+    font-size: 1.625em; }
+  .l-products p.legend {
+    font-family: "Poly";
+    font-style: italic;
+    font-size: 1em; }
+  .l-products section.l-products__dl {
+    background-image: url("../assets/images/bg/bg-race2.png");
+    background-size: cover;
+    height: 100vh;
+    position: relative; }
+    .l-products section.l-products__dl .l-products__dl__container {
+      padding: 69px 0 69px 69px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      height: 121px;
+      width: 371px;
+      background-color: rgba(36, 39, 44, 0.9); }
+      .l-products section.l-products__dl .l-products__dl__container h3, .l-products section.l-products__dl .l-products__dl__container p {
+        font-size: 1.5em;
+        text-transform: none;
+        color: #fff;
+        line-height: 36px; }
+      .l-products section.l-products__dl .l-products__dl__container h3 {
+        font-family: "Poly";
+        font-style: italic;
+        letter-spacing: 0px; }
+      .l-products section.l-products__dl .l-products__dl__container > p {
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 13px; }
+      .l-products section.l-products__dl .l-products__dl__container a {
+        text-decoration: none; }
+        .l-products section.l-products__dl .l-products__dl__container a img{
+          width: 140px;
+        }
+        .l-products section.l-products__dl .l-products__dl__container a p {
+          display: inline-block;
+          color: #EECA6D;
+          font-size: 1em;
+          font-family: "Poly"; }
+
+.product-wrapper {
+  border-bottom: solid 1px #d8d8d8;
+  margin-bottom: 73px;
+  position: relative; }
+  .product-wrapper .title {
+    text-align: center; }
+    .product-wrapper .title h4 {
+      font-size: 1.875em;
+      letter-spacing: 3px;
+      margin-bottom: 7px; }
+    .product-wrapper .title p {
+      font-family: "Poly";
+      font-style: italic;
+      font-size: 1em;
+      opacity: 0.7;
+      margin-bottom: 95px; }
+  .product-wrapper .description p {
+    font-size: 1.125em;
+    width: 440px;
+    line-height: 30px;
+    margin-bottom: 38px !important; }
+  .product-wrapper .description img {
+    width: 26px;
+    margin-right: 21px;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 0; }
+    .product-wrapper .description img.icon {
+      position: relative; }
+  .product-wrapper.product-wrapper_text-right .description {
+    float: right; }
+
+/* Products */
+section.l-products__def {
+  padding: 564px 0 110px 0; }
+  section.l-products__def .l-products__def__devices {
+    position: absolute;
+    width: 600px;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto; }
+    section.l-products__def .l-products__def__devices img {
+      position: absolute; }
+      section.l-products__def .l-products__def__devices img.def__devices--iphone {
+        height: 634px;
+        z-index: 10;
+        top: -127px; }
+      section.l-products__def .l-products__def__devices img.def__devices--nexus {
+        height: 588px;
+        top: -102px;
+        left: 217px; }
+  section.l-products__def .def__devices--available {
+    position: absolute;
+    top: 364px;
+    left: 734px;
+    right: 0;
+    margin: 0 auto;
+    width: 173px;
+    color: #fff;
+    font-style: italic;
+    font-family: "Poly"; }
+  section.l-products__def .l-products__def__wrapper {
+    position: relative; }
+
+section.l-products__map-car {
+  padding: 351px 0 299px 0;
+  background: url("../assets/images/bg/bg-map.png");
+  background-size: cover;
+  overflow: hidden;
+  position: relative; }
+  section.l-products__map-car:after {
+    content: ' ';
+    z-index: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(40, 40, 40, 0.4); }
+  section.l-products__map-car .l-products__map-car__wrapper__text {
+    width: 353px;
+    float: right;
+    position: relative;
+    z-index: 10; }
+    section.l-products__map-car .l-products__map-car__wrapper__text p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5em;
+      font-family: "Poly";
+      font-style: italic;
+      margin-bottom: 22px; }
+    section.l-products__map-car .l-products__map-car__wrapper__text h3 {
+      font-size: 2.25em;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: none;
+      line-height: 44px; }
+  section.l-products__map-car .l-products__map-car__wrapper__devices {
+    position: absolute;
+    margin-left: -80px; }
+    section.l-products__map-car .l-products__map-car__wrapper__devices .l-products__map-car__wrapper__devices-iphone img {
+      width: 345px;
+      position: absolute;
+      top: -250px;
+      z-index: 10; }
+
+section.l-products__hello {
+  padding: 150px 0 110px 0; }
+// Component styles are injected through grunt
+// injector
+@import 'admin/admin.scss';
+@import 'main/main.scss';
+@import '../components/footer/footer.scss';
+@import '../components/modal/modal.scss';
+@import '../components/oauth-buttons/oauth-buttons.scss';
+// endinjector

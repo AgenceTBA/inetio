@@ -1,0 +1,94 @@
+<navbar></navbar>
+<div class="container">
+<uib-tabset>
+  <uib-tab heading="Utilisateurs">
+	<table st-safe-src="users" st-table="displayCollection"  class="table table-striped">
+    <thead>
+        <tr>
+            <th st-sort="email">Email</th>
+            <th st-sort="nom">DisplayName</th>
+            <th st-sort="date">Date de naissance</th>
+            <th st-sort="sexe">Gender</th>
+            <th >Avatar</th>
+            <th >Actions</th>
+        </tr>
+        <tr>
+            <th>
+                <input st-search="email" placeholder="search for email" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="nom" placeholder="search for DisplayName" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="date" placeholder="search for date" class="input-sm form-control" type="search"/>
+            </th>
+            <th>
+                <input st-search="sexe" placeholder="search for Gender" class="input-sm form-control" type="search"/>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in displayCollection">
+            <td>{{row.email}}</td>
+
+            <td ng-if ="row.google">{{row.google.displayName}}</td>
+            <td ng-if ="!row.google">{{row.nom | uppercase}} {{row.prenom}}</td>
+
+            <td>{{row.date}}</td>
+
+            <td ng-if ="row.google">{{row.google.gender}}</td>
+            <td ng-if ="!row.google">{{row.sexe}}</td>
+
+            <td ng-if ="row.google"> <img src="{{row.google.image.url}}" /> </td>
+            <td ng-if ="!row.google">{{row.image}}</td>
+
+            <td>
+            	<a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+            	<button type="button" class="btn btn-default btn-xs" ng-click="open('lg', row);">More Info...</button>
+        	</td>
+        </tr>
+    </tbody>
+</table>
+  </uib-tab>
+  <uib-tab heading="Circuits">
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+        <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+    <table st-safe-src="circuits" st-table="displayCollectionCircuit"  class="table table-striped">
+    <thead>
+        <tr>
+            <th st-sort="nom">nom</th>
+        </tr>
+        <tr>
+            <th>
+                <input st-search="nom" placeholder="search for nom" class="input-sm form-control" type="search"/>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="circuit in displayCollectionCircuit">
+            <td>{{circuit.nom}}</td>
+            <td>
+                <a ng-click="delete(circuit)" class="trash">
+                    <span class="glyphicon glyphicon-trash pull-right"></span>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+    <h3> Ajouter une map à la base de donnée </h3>
+    <input placeholder="lieu" class="input-sm form-control" type="search" ng-model="search.newMap"/>
+    <button type="button" class="btn btn-default btn-xs" ng-click="getLatng(search.newMap);">Rechercher...</button>
+    <button ng-if="search.newMap.length > 0" type="button" class="btn btn-default btn-xs" ng-click="saveNewMap(search.newMap);">Add</button>
+
+    <ui-gmap-google-map center="mapadd.center" zoom="mapadd.zoom" draggable="true" options="options" bounds="mapadd.bounds">
+        <ui-gmap-markers models="randomMarkersAdd" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+  </uib-tab>
+</uib-tabset>
+
+<googlemodal></googlemodal>
+</div>
+
