@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('RaceModeCtrl', function($interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, geoLocation, $rootScope) {
+.controller('RaceModeCtrl', function($scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading) {
   //VARIABLE GLOBAL
   $scope.user = Auth.getCurrentUser()
   $scope.storage = $localStorage
@@ -54,18 +54,41 @@ angular.module('starter.controllers', [])
     currentSpeed: 100
   }
 
-
-  var position = geoLocation.getGeolocation();
-  console.log(position)
-
-  // listen location changes
-  $rootScope.$on('location:change', function (position) {
-    $scope.longitude = position.lng
-    $scope.latitude = position.lat
-    $scope.refreshMap($scope.latitude, $scope.longitude)
-    $scope.racing.currentSpeed = position.speed
-  });
-
+     
+document.addEventListener("deviceready", onDeviceReady, false);
+     
+    function onDeviceReady() {
+        $ionicLoading.show({
+            template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
+        });
+         
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 0
+        };
+        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+            var lat  = position.coords.latitude;
+            var long = position.coords.longitude;
+             
+            var myLatlng = new google.maps.LatLng(lat, long);
+             
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };          
+             
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+             
+            $scope.map = map;   
+            $ionicLoading.hide();           
+             
+        }, function(err) {
+            $ionicLoading.hide();
+            console.log(err);
+        });
+    }                     
 
   //FONCTION NAVIGATION
   $scope.go = function (url) {
@@ -84,42 +107,6 @@ angular.module('starter.controllers', [])
     })
   }
 
-  //FONCTION QUI GERE LA MAP
-  $scope.refreshMap = function (lat, long) {
-    var myLatlng = new google.maps.LatLng(lat, long);
-      var mapOptions = {
-          streetViewControl: true,
-          center: myLatlng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.TERRAIN
-      };
-
-      var map = new google.maps.Map(document.getElementById('map'),
-          mapOptions);
-
-      var marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-          icon: './img/been.png'
-      });
-      $scope.map = map;
-  }
-  $scope.lat = 0
-  /*
-  $scope.currentPosition = function () {
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-        console.log(position)
-        var lat  = position.coords.latitude
-        var long = position.coords.longitude
-        $scope.refreshMap(lat, long)
-      }, function(err) {
-        if (err) console.log(err)
-      });
-  }
-*/
   //MAIN DE LA PAGE
   $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
     $scope.listCircuit = res.data
