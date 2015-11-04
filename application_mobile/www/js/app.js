@@ -14,12 +14,8 @@ angular.module('starter', [
   'ngStorage',
   'angular-chrono'
     ])
-.constant('defaultLocalisation', {
-    'longitude': 6.1799699326036,
-    'latitude': 48.689290283084,
-    'speed': 0
-})
-.run(function($rootScope, $ionicPlatform, Auth, $state,$cordovaGeolocation, geoLocation, defaultLocalisation, $localStorage) {
+
+.run(function($rootScope, $ionicPlatform, Auth, $state) {
 
     // Redirect to login if route requires auth and the user is not logged in
     $rootScope.$on('$stateChangeStart', function(event, next) {
@@ -47,37 +43,7 @@ angular.module('starter', [
     }
 
 
-        $cordovaGeolocation
-            .getCurrentPosition()
-            .then(function (position) {
-                geoLocation.setGeolocation(position.coords.latitude, position.coords.longitude, position.coords.speed);
-            }, function (err) {
-                 // you need to enhance that point
-                $ionicPopup.alert({
-                    title: 'Ooops...',
-                    template: err.message
-                });
 
-                geoLocation.setGeolocation(defaultLocalisation.latitude, defaultLocalisation.longitude, defaultLocalisation.speed)
-            });
-
-        // begin a watch
-        var watch = $cordovaGeolocation.watchPosition({
-            frequency: 1000,
-            timeout: 10000,
-            enableHighAccuracy: false
-        }).then(function () {
-            }, function (err) {
-                // you need to enhance that point
-                geoLocation.setGeolocation(defaultLocalisation.latitude, defaultLocalisation.longitude, defaultLocalisation.speed);
-            }, function (position) {
-                console.log("ici")
-
-                geoLocation.setGeolocation(position.coords.latitude, position.coords.longitude, position.coords.speed);
-                // broadcast this event on the rootScope
-                $rootScope.$broadcast('location:change', geoLocation.getGeolocation());
-            }
-        );
   
 
 
@@ -181,41 +147,3 @@ angular.module('starter', [
     };
   })
 
-
-  .factory('geoLocation', function ($localStorage) {
-    return {
-        setGeolocation: function (latitude, longitude, speed) {
-            var position = {
-                latitude: latitude,
-                longitude: longitude,
-                speed: speed, 
-            }
-            $localStorage.setObject('geoLocation', position)
-        },
-        getGeolocation: function () {
-            return glocation = {
-                lat: $localStorage.getObject('geoLocation').latitude,
-                lng: $localStorage.getObject('geoLocation').longitude,
-                speed: $localStorage.getObject('geoLocation').speed,
-            }
-        }
-    }
-})
-
-
-.factory('$localStorage', ['$window', function ($window) {
-    return {
-        set: function (key, value) {
-            $window.localStorage[key] = value;
-        },
-        get: function (key, defaultValue) {
-            return $window.localStorage[key] || defaultValue;
-        },
-        setObject: function (key, value) {
-            $window.localStorage[key] = JSON.stringify(value);
-        },
-        getObject: function (key) {
-            return JSON.parse($window.localStorage[key] || '{}');
-        }
-    }
-}])
