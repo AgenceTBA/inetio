@@ -47,22 +47,22 @@ angular.module('starter.controllers', [])
   //VARIABLE GLOBAL
   $scope.user = Auth.getCurrentUser()
   $scope.storage = $localStorage
-    $scope.time = Date.now();
-    chronoService.addTimer('myTimer', { interval: 500 });
-    chronoService.start();
-    $scope.racing = {
-      currentSpeed: 100
-    }
+  $scope.time = Date.now();
+  chronoService.addTimer('myTimer', { interval: 500 });
+  chronoService.start();
+  $scope.racing = {
+    currentSpeed: 100
+  }
 
-    var position = geoLocation.getGeolocation();
-    console.log(position)
-    // listen location changes
-    $rootScope.$on('location:change', function (position) {
-      console.log("-----------------------------------------")
-      $scope.refreshMap(position.coords.latitude, position.coords.longitude)
-      console.log(position)
-      $scope.racing.currentSpeed = position.coords.speed
-    });
+  var position = geoLocation.getGeolocation();
+  console.log(position)
+  // listen location changes
+  $rootScope.$on('location:change', function (position) {
+    $scope.longitude = position.coords.longitude
+    $scope.latitude = position.coords.latitude
+    $scope.refreshMap(position.coords.latitude, position.coords.longitude)
+    $scope.racing.currentSpeed = position.coords.speed
+  });
 
 
   //FONCTION NAVIGATION
