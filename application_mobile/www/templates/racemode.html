@@ -1,12 +1,11 @@
 <ion-view view-title="Race Mode">
   <ion-content>
-      <h1>Race Mode</h3>
 <div id="map" data-tap-disabled="true"></div>
      <div chrono-timer timer-name="myTimer" start-time="time">
           {{ minutes|zeropad }}:{{ seconds|zeropad }}:{{ milliseconds}}<br />
       </div>
-      <h1> LONG: {{longitude}} </h1>
-      <h1> LAT: {{latitude}} </h1>
+      <h1> LONG: {{long}} </h1>
+      <h1> LAT: {{lat}} </h1>
       <h1>Current Speed : {{racing.currentSpeed}}</h1>
       <h1>Current Lap : {{racing.currentLap}}</h1>
   </ion-content>

@@ -54,32 +54,35 @@ angular.module('starter.controllers', [])
     currentSpeed: 100
   }
 
-     
-document.addEventListener("deviceready", onDeviceReady, false);
-     
-    function onDeviceReady() {
-        $ionicLoading.show({
-            template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Acquiring location!'
-        });
-         
+
         var posOptions = {
             enableHighAccuracy: true,
             timeout: 20000,
             maximumAge: 0
         };
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-            var lat  = position.coords.latitude;
-            var long = position.coords.longitude;
+
+            $scope.lat  = position.coords.latitude;
+            $scope.long = position.coords.longitude;
+            $scope.racing.currentSpeed = position.coords.longitude;
              
-            var myLatlng = new google.maps.LatLng(lat, long);
+            var myLatlng = new google.maps.LatLng($scope.lat, $scope.long);
              
             var mapOptions = {
                 center: myLatlng,
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };          
-             
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+
+
+
+                  var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          icon: './img/been.png'
+      });
              
             $scope.map = map;   
             $ionicLoading.hide();           
@@ -88,7 +91,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
             $ionicLoading.hide();
             console.log(err);
         });
-    }                     
 
   //FONCTION NAVIGATION
   $scope.go = function (url) {
