@@ -20,7 +20,7 @@ angular.module('starter.service', [])
     });
   })
 
-  .factory('Auth', function Auth($http, User, $cookies, $q) {
+  .factory('Auth', function Auth($http, User, $localStorage, $q) {
     /**
      * Return a callback or noop function
      *
@@ -33,14 +33,14 @@ angular.module('starter.service', [])
 
     currentUser = {};
 
-    if ($cookies.get('token')) {
+    if ($localStorage.token) {
       currentUser = User.get();
     }
 
     return {
 
       successGoogleAuth: function (user, callback) {
-        $cookies.put('token', user.data.token);
+       $localStorage.token = user.data.token;
 
         currentUser = User.get();
         console.log("currentUser")
@@ -62,8 +62,8 @@ angular.module('starter.service', [])
           password: user.password
         })
         .then(function(res) {
-          $cookies.put('token', res.data.token);
-          console.log(res.data.token)
+          $localStorage.token = res.data.token;
+          console.log($localStorage.token)
 
           currentUser = User.get();
                   console.log(currentUser)
@@ -85,7 +85,7 @@ angular.module('starter.service', [])
        * Delete access token and user info
        */
       logout: function() {
-        $cookies.remove('token');
+        $localStorage.token = null;
         currentUser = {};
       },
 
@@ -99,7 +99,7 @@ angular.module('starter.service', [])
       createUser: function(user, callback) {
         return User.save(user,
           function(data) {
-            $cookies.put('token', data.token);
+            $localStorage.token = data.token;
             currentUser = User.get();
             return safeCb(callback)(null, user);
           },
@@ -197,7 +197,7 @@ angular.module('starter.service', [])
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        return $cookies.get('token');
+        return $localStorage.token;
       }
     };
   })
