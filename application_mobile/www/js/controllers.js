@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('RaceModeCtrl', function($scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading) {
+.controller('RaceModeCtrl', function($interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading) {
   //VARIABLE GLOBAL
   $scope.user = Auth.getCurrentUser()
   $scope.storage = $localStorage
@@ -54,13 +54,12 @@ angular.module('starter.controllers', [])
     currentSpeed: 100
   }
 
-
         var posOptions = {
             enableHighAccuracy: true,
             timeout: 20000,
             maximumAge: 0
         };
-        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        $cordovaGeolocation.watch(posOptions).then(function (position) {
 
             $scope.lat  = position.coords.latitude;
             $scope.long = position.coords.longitude;
@@ -91,6 +90,43 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide();
             console.log(err);
         });
+
+
+
+    // begin watching
+    var watch = $cordovaGeolocation.watchPosition({ frequency: 1000 });
+    watch.promise.then(function() { /* Not  used */ },
+        function(err) {
+
+        },
+        function(position) {
+
+            $scope.lat  = position.coords.latitude;
+            $scope.long = position.coords.longitude;
+            $scope.racing.currentSpeed = position.coords.longitude;
+             
+            var myLatlng = new google.maps.LatLng($scope.lat, $scope.long);
+             
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };          
+
+
+
+                  var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          icon: './img/been.png'
+      });
+             
+            $scope.map = map;   
+            $ionicLoading.hide(); 
+        });
+
 
   //FONCTION NAVIGATION
   $scope.go = function (url) {

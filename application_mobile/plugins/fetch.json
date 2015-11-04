@@ -53,7 +53,7 @@
             "type": "registry",
             "id": "org.apache.cordova.geolocation"
         },
-        "is_top_level": true,
+        "is_top_level": false,
         "variables": {}
     },
     "cordova-plugin-geolocation": {
@@ -63,6 +63,41 @@
             "subdir": "."
         },
         "is_top_level": true,
+        "variables": {}
+    },
+    "org.transistorsoft.cordova.background-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/christocracy/cordova-plugin-background-geolocation.git",
+            "subdir": ".",
+            "ref": "cordova-4.x"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.transistorsoft.cordova.background-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/transistorsoft/cordova-background-geolocation-lt",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "org.apache.cordova.dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.dialogs"
+        },
+        "is_top_level": false,
         "variables": {}
     }
 }
