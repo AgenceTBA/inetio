@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('RaceModeCtrl', function($scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, geoLocation, $rootScope) {
+.controller('RaceModeCtrl', function($interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, geoLocation, $rootScope) {
   //VARIABLE GLOBAL
   $scope.user = Auth.getCurrentUser()
   $scope.storage = $localStorage
@@ -54,14 +54,16 @@ angular.module('starter.controllers', [])
     currentSpeed: 100
   }
 
+
   var position = geoLocation.getGeolocation();
   console.log(position)
+
   // listen location changes
   $rootScope.$on('location:change', function (position) {
-    $scope.longitude = position.coords.longitude
-    $scope.latitude = position.coords.latitude
-    $scope.refreshMap(position.coords.latitude, position.coords.longitude)
-    $scope.racing.currentSpeed = position.coords.speed
+    $scope.longitude = position.lng
+    $scope.latitude = position.lat
+    $scope.refreshMap($scope.latitude, $scope.longitude)
+    $scope.racing.currentSpeed = position.speed
   });
 
 
@@ -121,8 +123,6 @@ angular.module('starter.controllers', [])
   //MAIN DE LA PAGE
   $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
     $scope.listCircuit = res.data
-        $scope.refreshMap(position.lat, position.lng)
-      $scope.racing.currentSpeed = position.speed
 
   })
 })

@@ -18,7 +18,7 @@
     "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-whitelist"
+            "id": "cordova-plugin-whitelist@1.0.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -52,6 +52,15 @@
         "source": {
             "type": "registry",
             "id": "org.apache.cordova.geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-geolocation",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}

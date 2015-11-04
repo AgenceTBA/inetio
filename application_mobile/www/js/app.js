@@ -19,7 +19,7 @@ angular.module('starter', [
     'latitude': 48.689290283084,
     'speed': 0
 })
-.run(function($rootScope, $ionicPlatform, Auth, $state,$cordovaGeolocation, geoLocation, $localStorage) {
+.run(function($rootScope, $ionicPlatform, Auth, $state,$cordovaGeolocation, geoLocation, defaultLocalisation, $localStorage) {
     // Redirect to login if route requires auth and the user is not logged in
     $rootScope.$on('$stateChangeStart', function(event, next) {
       if (next.authenticate) {
@@ -63,13 +63,15 @@ angular.module('starter', [
         // begin a watch
         var watch = $cordovaGeolocation.watchPosition({
             frequency: 1000,
-            timeout: 3000,
-            enableHighAccuracy: true
+            timeout: 10000,
+            enableHighAccuracy: false
         }).then(function () {
             }, function (err) {
                 // you need to enhance that point
                 geoLocation.setGeolocation(defaultLocalisation.latitude, defaultLocalisation.longitude, defaultLocalisation.speed);
             }, function (position) {
+                console.log("ici")
+
                 geoLocation.setGeolocation(position.coords.latitude, position.coords.longitude, position.coords.speed);
                 // broadcast this event on the rootScope
                 $rootScope.$broadcast('location:change', geoLocation.getGeolocation());
