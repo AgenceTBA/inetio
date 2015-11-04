@@ -20,6 +20,7 @@ angular.module('starter', [
     'speed': 0
 })
 .run(function($rootScope, $ionicPlatform, Auth, $state,$cordovaGeolocation, geoLocation, defaultLocalisation, $localStorage) {
+
     // Redirect to login if route requires auth and the user is not logged in
     $rootScope.$on('$stateChangeStart', function(event, next) {
       if (next.authenticate) {
@@ -106,15 +107,6 @@ angular.module('starter', [
     }
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
   .state('app.race', {
     url: '/race',
     views: {
@@ -142,7 +134,8 @@ angular.module('starter', [
         }
       }
     })
-    .state('app.main', {
+    
+  .state('app.main', {
       url: '/main',
       views: {
         'menuContent': {
@@ -150,39 +143,35 @@ angular.module('starter', [
           controller: 'MainCtrl'
         }
       }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/login');
 })
 
-  .factory('authInterceptor', function($rootScope, $q, $cookies, $injector) {
+  .factory('authInterceptor', function($rootScope, $q, $localStorage, $injector) {
     var state;
     return {
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        if ($cookies.get('token')) {
-          config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+        console.log($localStorage.token);
+        if ($localStorage.token) {
+          config.headers.Authorization = 'Bearer ' + $localStorage.token;
+          console.log('Token : ' + config.headers.Authorization);
         }
         return config;
       },
 
       // Intercept 401s and redirect you to login
       responseError: function(response) {
+        console.log("ERROR AUTH");
+        for(var i in response)
+          console.log(i + " : " + response[i]);
+        console.log(response.status);
         if (response.status === 401) {
-          (state || (state = $injector.get('$state'))).go('login');
+          (state || (state = $injector.get('$location'))).path('app/login');
           // remove any stale tokens
-          $cookies.remove('token');
+          $localStorage.token = null;
           return $q.reject(response);
         }
         else {
