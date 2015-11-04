@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-.controller('RaceModeCtrl', function($interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading) {
+.controller('RaceModeCtrl', function($interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope) {
   //VARIABLE GLOBAL
   $scope.user = Auth.getCurrentUser()
   $scope.storage = $localStorage
@@ -54,13 +54,64 @@ angular.module('starter.controllers', [])
     currentSpeed: 100
   }
 
-        var posOptions = {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 0
-        };
-        $cordovaGeolocation.watch(posOptions).then(function (position) {
+var mainloop;
 
+$scope.startloop = function(){
+  if (angular.isDefined(mainloop) ) return;
+  mainloop = $interval(function(){
+
+    var options = {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 10000
+    };
+
+    $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
+      latlong =  { 'lat' : pos.coords.latitude, 'long' : pos.coords.longitude };
+
+ $scope.lat  = pos.coords.latitude
+            $scope.long = pos.coords.longitude
+            $scope.racing.currentSpeed = pos.coords.speed
+             
+            var myLatlng = new google.maps.LatLng($scope.lat, $scope.long);
+             
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };          
+
+
+
+                  var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          icon: './img/been.png'
+      });
+             
+            $scope.map = map;   
+
+
+      $rootScope.currentLocation = latlong;
+    }, function(err) {});
+
+  },1000);
+};
+
+$scope.stoploop = function(){
+  if (angular.isDefined(mainloop)) {
+    $interval.cancel(mainloop);
+    mainloop = undefined;
+  }
+};
+$scope.startloop()
+$scope.$on('$destroy', function() {
+  // Make sure that the interval is destroyed too
+  $scope.stoploop();
+});
+/*
             $scope.lat  = position.coords.latitude;
             $scope.long = position.coords.longitude;
             $scope.racing.currentSpeed = position.coords.longitude;
@@ -84,48 +135,7 @@ angular.module('starter.controllers', [])
       });
              
             $scope.map = map;   
-            $ionicLoading.hide();           
-             
-        }, function(err) {
-            $ionicLoading.hide();
-            console.log(err);
-        });
-
-
-
-    // begin watching
-    var watch = $cordovaGeolocation.watchPosition({ frequency: 1000 });
-    watch.promise.then(function() { /* Not  used */ },
-        function(err) {
-
-        },
-        function(position) {
-
-            $scope.lat  = position.coords.latitude;
-            $scope.long = position.coords.longitude;
-            $scope.racing.currentSpeed = position.coords.longitude;
-             
-            var myLatlng = new google.maps.LatLng($scope.lat, $scope.long);
-             
-            var mapOptions = {
-                center: myLatlng,
-                zoom: 16,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };          
-
-
-
-                  var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
-
-      var marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-          icon: './img/been.png'
-      });
-             
-            $scope.map = map;   
-            $ionicLoading.hide(); 
-        });
+*/
 
 
   //FONCTION NAVIGATION
