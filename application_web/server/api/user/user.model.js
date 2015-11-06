@@ -22,6 +22,10 @@ var UserSchema = new Schema({
   session: [{
     idCircuit: String,
     nom: String,
+    startingPoint: {
+      longitude: Number,
+      latitude: Number
+    },
     parcours: [{
       longitude: Number,
       latitude: Number
