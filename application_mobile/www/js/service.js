@@ -1,4 +1,4 @@
-angular.module('starter.service', [])
+angular.module('app')
 
   .factory('User', function ($resource) {
     return $resource('http://inetio.coolcode.fr/api/users/:id/:controller', {
@@ -201,3 +201,9 @@ angular.module('starter.service', [])
       }
     };
   })
+
+.filter('secondsToDateTime', [function() {
+    return function(seconds) {
+        return new Date(1970, 0, 1).setSeconds(seconds);
+    };
+}])
