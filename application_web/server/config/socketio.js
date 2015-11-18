@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/race_session/race_session.socket').register(socket);
   require('../api/googleIonicAuth/googleIonicAuth.socket').register(socket);
   require('../api/circuit/circuit.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);

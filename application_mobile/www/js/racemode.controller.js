@@ -63,8 +63,7 @@ angular.module('app')
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
-        $scope.user.session.push($scope.session)
-        console.log($scope.user)
+        $http.post('http://inetio.coolcode.fr/api/race_sessions', $scope.session)
     }
     $scope.start = function () {
         $scope.session = {
