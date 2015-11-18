@@ -21,3 +21,79 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+$font_regular: "Open Sans", sans-serif;
+
+/***** login *****/
+
+.bg-login{
+	position: absolute;
+	top: 0;
+	left: -140%;
+	height: 100vh;
+}
+
+.logo{
+	width: 120px;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    margin: 11px auto;
+    right: 0;
+}
+
+.bar-stable .button.button-clear{
+	color: #fff;
+}
+
+.bar.bar-stable{
+  	background-image: linear-gradient(#000, #1c1d1d) !important;
+  	position: relative;
+}
+
+.modal-login{
+	background-color: transparent;
+}
+
+.modal-login .bar-header{
+	background: transparent;
+}
+
+.modal-login .item{
+	background-color: transparent;
+	border: none;
+}
+
+.google-co, .co{
+	width: 250px !important;
+  	height: 50px;
+  	box-shadow: 1px 1.732px 5px 0px rgb( 0, 0, 0 );
+  	border: none;
+	border-radius: 0;
+	margin: 0 auto;
+}
+
+.co{
+	background: #24272C !important;
+}
+
+.google-co{
+	background-color: #db4437 !important;
+}
+
+/***** menu *****/
+
+.menu{
+	background-image: url("../img/bg-menu.jpg");
+	background-size: cover;
+    background-position-x: 40%;
+    .scroll-content{
+    	padding-left: 20px;
+    }
+    .item-complex .item-content, .item-radio .item-content, .item{
+    	background-color: transparent;
+    	color: #fff;
+    	font-family: $font_regular;
+    	font-size: 14px;
+    	border: none;
+    }
+}
