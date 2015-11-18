@@ -1,4 +1,5 @@
-<ion-modal-view>
+<img src="/img/bg-login.jpg" class="bg-login" alt="" />
+<ion-modal-view class="modal-login">
   <ion-header-bar>
     <h1 class="title">Login</h1>
     <div class="buttons">
@@ -17,10 +18,10 @@
           <input type="password" ng-model="user.password">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit" ng-click="localLogin()">Log in</button>
+          <button class="button button-block button-positive co" type="submit" ng-click="localLogin()">Log in</button>
         </label>
         <label class="item">
-          <button class="button button-block button-positive" ng-click="googleLogin()" >Log Google</button>
+          <button class="button button-block button-positive google-co" ng-click="googleLogin()" >Connect with Google</button>
         </label>
       </div>
     </form>
