@@ -8,7 +8,7 @@ angular.module('app')
     $scope.storage = $localStorage
     $scope.time = Date.now();
     $scope.counter = 0;
-
+    $scope.startStop = true
     function distance(pos1, pos2) {
         var lat1 = pos1.latitude
         var lon1 = pos1.longitude
@@ -55,6 +55,15 @@ angular.module('app')
           cb({ 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude })
         })
     }
+    $scope.record = function () {
+        $scope.start()
+    }
+    $scope.stopRecord = function () {
+        $scope.stoploop()
+        $scope.stopTimer()
+    }
+
+
     $scope.start = function () {
         $scope.session = {
             round: 0,
@@ -74,7 +83,6 @@ angular.module('app')
     }
 
 
-    $scope.start()
     var mainloop;
 
     $scope.initialisationMap = function () {
@@ -93,6 +101,9 @@ angular.module('app')
         }
         $scope.marker = [];
     };
+
+
+
     $scope.inStartZone = true
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
@@ -142,7 +153,6 @@ angular.module('app')
                     icon: './img/circle.png'
                 });
 
-                console.log($scope.map.gmap('get','markers'))
                 $scope.map.panTo($scope.myLatlng);
                     $rootScope.currentLocation = latlong;
                 }, function(err) {});
