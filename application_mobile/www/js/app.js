@@ -16,14 +16,13 @@ angular.module('app', [
 .run(function($rootScope, $ionicPlatform, Auth, $state) {
 
     // Redirect to login if route requires auth and the user is not logged in
-    $rootScope.$on('$stateChangeStart', function(event, next) {
-      if (next.authenticate) {
-        Auth.isLoggedIn(function(loggedIn) {
-          if (!loggedIn) {
-            event.preventDefault();
-            $state.go('login');
-          }
-        });
+    Auth.getCurrentUser(function(user) {
+      console.log(user);
+      if (!user.email) {
+        event.preventDefault();
+        $state.go('login');
+      } else {
+        $state.go('app.main');
       }
     });
 
@@ -112,10 +111,8 @@ angular.module('app', [
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        console.log($localStorage.token);
         if ($localStorage.token) {
           config.headers.Authorization = 'Bearer ' + $localStorage.token;
-          console.log('Token : ' + config.headers.Authorization);
         }
         return config;
       },
