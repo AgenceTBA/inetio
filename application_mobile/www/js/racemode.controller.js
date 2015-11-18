@@ -62,7 +62,9 @@ angular.module('app')
         $scope.stoploop()
         $scope.stopTimer()
     }
-
+      $scope.getStartingPoint(function (pos){
+        $scope.initialisationMap(pos)
+      })
 
     $scope.start = function () {
         $scope.session = {
@@ -74,7 +76,7 @@ angular.module('app')
       $scope.getStartingPoint(function (pos){
         $scope.session['startingPoint'] = pos
         //initMap
-        $scope.initialisationMap()
+        $scope.initialisationMap(pos)
         //ON START LE CHRONO
         $scope.statTimer()
         //ON RECORD LES POSITIONS
@@ -85,8 +87,8 @@ angular.module('app')
 
     var mainloop;
 
-    $scope.initialisationMap = function () {
-        $scope.myLatlng = new google.maps.LatLng(47.3590900, 3.3852100);
+    $scope.initialisationMap = function (pos) {
+        $scope.myLatlng = new google.maps.LatLng(pos.latitude, pos.longitude);
         $scope.mapOptions = {
             center: $scope.myLatlng,
             zoom: 16,
