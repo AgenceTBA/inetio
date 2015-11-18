@@ -68,6 +68,7 @@ angular.module('app')
     }
     $scope.start = function () {
         $scope.session = {
+            email: $scope.user.email,
             round: 0,
             bestTime: 0,
             vMax: 0
