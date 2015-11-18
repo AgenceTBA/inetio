@@ -9,6 +9,12 @@ angular.module('app')
     $scope.time = Date.now();
     $scope.counter = 0;
     $scope.startStop = true
+    var mainloop;
+    $scope.racing = {
+      currentSpeed: 100
+    }
+    $scope.inStartZone = true
+
     function distance(pos1, pos2) {
         var lat1 = pos1.latitude
         var lon1 = pos1.longitude
@@ -29,20 +35,16 @@ angular.module('app')
         /** Converts numeric degrees to radians */
         return Value * Math.PI / 180;
     }
+    //TIMER
     $scope.onTimeout = function(){
         $scope.counter++;
         mytimeout = $timeout($scope.onTimeout,1);
     }
-
     $scope.statTimer = function () {
       var mytimeout = $timeout($scope.onTimeout,1);      
     }
-    
     $scope.stopTimer = function(){
         $timeout.cancel(mytimeout);
-    }
-    $scope.racing = {
-      currentSpeed: 100
     }
     $scope.getStartingPoint = function (cb) {
         var options = {
@@ -50,22 +52,20 @@ angular.module('app')
             maximumAge: 0,
             timeout: 10000
         };
-
         $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
           cb({ 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude })
         })
     }
+    //BOUTON START AND STOP
     $scope.record = function () {
         $scope.start()
     }
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
+        $scope.user.session.push($scope.session)
+        console.log($scope.user)
     }
-      $scope.getStartingPoint(function (pos){
-        $scope.initialisationMap(pos)
-      })
-
     $scope.start = function () {
         $scope.session = {
             round: 0,
@@ -83,10 +83,6 @@ angular.module('app')
         $scope.startloop()
       })
     }
-
-
-    var mainloop;
-
     $scope.initialisationMap = function (pos) {
         $scope.myLatlng = new google.maps.LatLng(pos.latitude, pos.longitude);
         $scope.mapOptions = {
@@ -96,29 +92,22 @@ angular.module('app')
         }; 
         $scope.map = new google.maps.Map(document.getElementById("map"), $scope.mapOptions); 
     }
-    $scope.deleteMarkers = function () {
-        //Loop through all the markers and remove
-        for (var i = 0; i < $scope.marker.length; i++) {
-            $scope.marker[i].setMap(null);
-        }
-        $scope.marker = [];
-    };
-
-
-
-    $scope.inStartZone = true
+    $scope.stoploop = function(){
+      if (angular.isDefined(mainloop)) {
+        $interval.cancel(mainloop);
+        mainloop = undefined;
+      }
+    }
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
             return;
-
         mainloop = $interval(function(){
-        
             var options = {
                 enableHighAccuracy: true,
                 maximumAge: 0,
                 timeout: 10000
             };
-            
+
             $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
                 latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
 
@@ -161,54 +150,18 @@ angular.module('app')
         
         },1000);
     };
-
-    $scope.stoploop = function(){
-      if (angular.isDefined(mainloop)) {
-        $interval.cancel(mainloop);
-        mainloop = undefined;
-      }
-    };
-
     $scope.$on('$destroy', function() {
       // Make sure that the interval is destroyed too
       $scope.stoploop();
     });
-
-/*
-    $scope.lat  = position.coords.latitude;
-    $scope.long = position.coords.longitude;
-    $scope.racing.currentSpeed = position.coords.longitude;
-     
-    var myLatlng = new google.maps.LatLng($scope.lat, $scope.long);
-     
-    var mapOptions = {
-        center: myLatlng,
-        zoom: 16,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };          
-
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        icon: './img/been.png'
-    });
-             
-    $scope.map = map;   
-*/
-
-
     //FONCTION NAVIGATION
     $scope.go = function (url) {
       $state.go(url)
     }
-
     $scope.signout = function () {
       Auth.logout()
       $state.go("app.login")
     }
-
     $scope.chosenRace = function (_idCircuit) {
       $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){
         $localStorage.raceMode = {
@@ -217,10 +170,12 @@ angular.module('app')
         $state.go('app.racemode')
       })
     }
-
     //MAIN DE LA PAGE
     $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
       $scope.listCircuit = res.data
     });
-
+    //INIT DE LA MAP
+      $scope.getStartingPoint(function (pos){
+        $scope.initialisationMap(pos)
+      })
 });
