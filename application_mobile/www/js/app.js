@@ -23,6 +23,7 @@ angular.module('app', [
         $state.go('login');
       } else {
         $state.go('app.main');
+
       }
     });
 

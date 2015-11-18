@@ -148,6 +148,19 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
+
+// Updates an existing Circuit in the DB
+exports.update = function(req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  User.findByIdAsync(req.params.id)
+    .then(handleEntityNotFound(res))
+    .then(saveUpdates(req.body))
+    .then(responseWithResult(res))
+    .catch(handleError(res));
+};
+
 /**
  * Get my info
  */

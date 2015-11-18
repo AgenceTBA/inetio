@@ -1,7 +1,14 @@
 angular.module('app')
 
 .controller('RaceModeCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope) {
-  
+    //VARIABLE GLOBAL
+
+    var TOLERANCE = 1
+    $scope.user = Auth.getCurrentUser()
+    $scope.storage = $localStorage
+    $scope.time = Date.now();
+    $scope.counter = 0;
+
     function distance(pos1, pos2) {
         var lat1 = pos1.latitude
         var lon1 = pos1.longitude
@@ -18,20 +25,10 @@ angular.module('app')
         var d = R * c;
         return d;
     }
-
     function toRad(Value) {
         /** Converts numeric degrees to radians */
         return Value * Math.PI / 180;
     }
-
-    //VARIABLE GLOBAL
-    var TOLERANCE = 1
-    $scope.user = Auth.getCurrentUser()
-    $scope.storage = $localStorage
-    $scope.time = Date.now();
-    $scope.counter = 0;
-
-
     $scope.onTimeout = function(){
         $scope.counter++;
         mytimeout = $timeout($scope.onTimeout,1);
@@ -44,18 +41,9 @@ angular.module('app')
     $scope.stopTimer = function(){
         $timeout.cancel(mytimeout);
     }
-
-
     $scope.racing = {
       currentSpeed: 100
     }
-
-    $scope.session = {
-      round: 0,
-      bestTime: 0,
-      vMax: 0
-    }
-
     $scope.getStartingPoint = function (cb) {
         var options = {
             enableHighAccuracy: true,
@@ -67,11 +55,17 @@ angular.module('app')
           cb({ 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude })
         })
     }
-
     $scope.start = function () {
+        $scope.session = {
+            round: 0,
+            bestTime: 0,
+            vMax: 0
+        }
       //ON RECUPERE LE POINT DE DEPART
       $scope.getStartingPoint(function (pos){
-        $scope.session = {startingPoint : pos}
+        $scope.session['startingPoint'] = pos
+        //initMap
+        $scope.initialisationMap()
         //ON START LE CHRONO
         $scope.statTimer()
         //ON RECORD LES POSITIONS
@@ -83,6 +77,22 @@ angular.module('app')
     $scope.start()
     var mainloop;
 
+    $scope.initialisationMap = function () {
+        $scope.myLatlng = new google.maps.LatLng(47.3590900, 3.3852100);
+        $scope.mapOptions = {
+            center: $scope.myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }; 
+        $scope.map = new google.maps.Map(document.getElementById("map"), $scope.mapOptions); 
+    }
+    $scope.deleteMarkers = function () {
+        //Loop through all the markers and remove
+        for (var i = 0; i < $scope.marker.length; i++) {
+            $scope.marker[i].setMap(null);
+        }
+        $scope.marker = [];
+    };
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
             return;
@@ -97,48 +107,43 @@ angular.module('app')
             
             $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
                 latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
-            
+
                 $scope.latitude  = pos.coords.latitude
                 $scope.longitude = pos.coords.longitude
                 $scope.racing.currentSpeed = pos.coords.speed
-            
-            
+
                 //RECORD DES POSITIONS AU COURS DU TRAJET
                 if (!$scope.session.parcours) 
                     $scope.session.parcours = []
-                
+
                 $scope.session.parcours.push({longitude: $scope.longitude, latitude: $scope.latitude})
-            
+
                 //ON CALCULE LA VMAX
                 if ($scope.session.vMax < $scope.racing.currentSpeed) 
                     $scope.session.vMax = $scope.racing.currentSpeed
     
                 //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
+                //SI ON EST AU ROUND 0 CAS SPECIAL
+
                 if (distance($scope.session.startingPoint, latlong) <= TOLERANCE){
                     $scope.session.round ++;
                     if ($scope.session.bestLapTime < $scope.counter) 
                         $scope.session.bestLapTime = $scope.counter
                 }
-            
-            
+
+
+
                 $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
-    
-                $scope.mapOptions = {
-                    center: $scope.myLatlng,
-                    zoom: 16,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }; 
-    
-                $scope.map = new google.maps.Map(document.getElementById("map"), $scope.mapOptions);          
+                
                 $scope.marker = new google.maps.Marker({
                     position: $scope.myLatlng,
                     map: $scope.map,
                     icon: './img/been.png'
                 });
-
-                console.log($scope.map)
-                $rootScope.currentLocation = latlong;
-            }, function(err) {});
+                console.log($scope.session)
+                $scope.map.panTo($scope.myLatlng);
+                    $rootScope.currentLocation = latlong;
+                }, function(err) {});
         
         },1000);
     };
