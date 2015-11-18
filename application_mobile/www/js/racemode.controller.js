@@ -93,6 +93,7 @@ angular.module('app')
         }
         $scope.marker = [];
     };
+    $scope.inStartZone = true
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
             return;
@@ -124,23 +125,24 @@ angular.module('app')
     
                 //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
                 //SI ON EST AU ROUND 0 CAS SPECIAL
-
-                if (distance($scope.session.startingPoint, latlong) <= TOLERANCE){
+                if ((distance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
+                {
+                    $scope.inStartZone = true
                     $scope.session.round ++;
                     if ($scope.session.bestLapTime < $scope.counter) 
                         $scope.session.bestLapTime = $scope.counter
-                }
-
-
-
+                } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
+                    $scope.inStartZone = false
+                } else {}
                 $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
                 
                 $scope.marker = new google.maps.Marker({
                     position: $scope.myLatlng,
                     map: $scope.map,
-                    icon: './img/been.png'
+                    icon: './img/circle.png'
                 });
-                console.log($scope.session)
+
+                console.log($scope.map.gmap('get','markers'))
                 $scope.map.panTo($scope.myLatlng);
                     $rootScope.currentLocation = latlong;
                 }, function(err) {});
