@@ -8,17 +8,23 @@
             <li><label>Sexe: {{items.google.gender}}</label></li>
         </ul>
         <h6>Liste des circuits auquels à participé: {{items.google.displayName}} </h6>
-        <p ng-if="items.session.length == 0">{{items.google.displayName}} n'a participé à aucune course </p>
-        <div ng-if="items.session.length != 0" ng-repeat="s in items.session">
-            <ul>
-                <li><label>Nom de la session: {{s.nom}}</label></li>
-                <li><label>Meilleurs Temps: {{s.bestTime}}</label></li>
-                <li><label>Vitesse Maximum: {{s.vMax}}</label></li>
-                <li><label>Nombre de tour: {{s.round}}</label></li>
-                <li><label>Angle de plus élevé: {{s.bestAngler}}</label></li>
-                <li><label>Derniere date: {{s.date}}</label></li>
-            </ul>
-        </div>
+        <p ng-if="items.sessions.length == 0">{{items.google.displayName}} n a participé à aucune course </p>
+        <table style="width:100%" ng-if="items.sessions.length != 0">
+          <tr >
+            <td>Meilleurs Temps</td> 
+            <td>Vitesse Maximum</td>
+            <td>Nombre de tour</td>
+            <td>Angle de plus élevé</td>
+            <td>Derniere date</td>
+          </tr>
+          <tr ng-repeat="s in items.sessions">
+            <td>{{s.bestTime}}</td>
+            <td>{{s.vMax}}</td> 
+            <td>{{s.round}}</td>
+            <td>{{s.bestAngler}}</td>
+            <td>{{s.date}}</td>
+          </tr>
+        </table>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>

@@ -17,7 +17,6 @@ angular.module('app', [
 
     // Redirect to login if route requires auth and the user is not logged in
     Auth.getCurrentUser(function(user) {
-      console.log(user);
       if (!user.email) {
         event.preventDefault();
         $state.go('login');
@@ -60,7 +59,16 @@ angular.module('app', [
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
-
+  
+  .state('app.profil', {
+    url: '/profil',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/profil.html',
+        controller: 'ProfilCtrl'
+      }
+    }
+  })
   .state('app.race', {
     url: '/race',
     views: {

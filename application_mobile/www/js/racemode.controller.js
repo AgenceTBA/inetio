@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('RaceModeCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope) {
+.controller('RaceModeCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
     var TOLERANCE = 1
@@ -8,13 +8,20 @@ angular.module('app')
     $scope.storage = $localStorage
     $scope.time = Date.now();
     $scope.counter = 0;
+    $scope.angle = 0;
     $scope.startStop = true
     var mainloop;
     $scope.racing = {
       currentSpeed: 100
     }
     $scope.inStartZone = true
-
+        $scope.session = {
+            email: $scope.user.email,
+            round: 0,
+            bestTime: 0,
+            vMax: 0,
+            bestAngler: 0
+        }
     function distance(pos1, pos2) {
         var lat1 = pos1.latitude
         var lon1 = pos1.longitude
@@ -60,17 +67,53 @@ angular.module('app')
     $scope.record = function () {
         $scope.start()
     }
+ // An alert dialog
+ $scope.showAlert = function() {
+    //verif si user a bien fait un tour
+    if ($scope.session.round > 0){
+       var alertPopup = $ionicPopup.alert({
+         title: 'Vous avez mis fin à votre session',
+         template: 'Bravo, votre course vient d etre sauvegarder'
+       });
+       alertPopup.then(function(res) {
+        $http({
+            url: 'http://inetio.coolcode.fr/api/race_sessions',
+            method: "POST",
+            data: $scope.session
+        })
+        .then(function(response) {
+            console.log('upload api ok')
+            $state.go('app.main')
+        }, 
+        function(response) { // optional
+            console.log('upload api pas ok')
+            $state.go('app.main')
+        });
+       });        
+    } else {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Vous avez mis fin à votre session',
+         template: 'Oh, meme pas un tour de fait ?? Je n enregistre pas ça'
+       });
+       alertPopup.then(function(res) {
+            $state.go('app.main')
+       });  
+    }
+ };
+
+
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
-        $scope.user.session.push($scope.session)
-        console.log($scope.user)
+        $scope.showAlert()
     }
     $scope.start = function () {
         $scope.session = {
+            email: $scope.user.email,
             round: 0,
             bestTime: 0,
-            vMax: 0
+            vMax: 0,
+            bestAngler: 0
         }
       //ON RECUPERE LE POINT DE DEPART
       $scope.getStartingPoint(function (pos){
@@ -98,6 +141,7 @@ angular.module('app')
         mainloop = undefined;
       }
     }
+
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
             return;
@@ -107,6 +151,13 @@ angular.module('app')
                 maximumAge: 0,
                 timeout: 10000
             };
+    $cordovaDeviceMotion.getCurrentAcceleration().then(function(result) {
+        $scope.angle = Math.round(Math.abs(result.x) * 10)
+        if ($scope.angle > $scope.session.bestAngler)
+            $scope.session.bestAngler = $scope.angle 
+    }, function(err) {
+      // An error occurred. Show a message to the user
+    });
 
             $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
                 latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
@@ -147,6 +198,13 @@ angular.module('app')
                 $scope.map.panTo($scope.myLatlng);
                     $rootScope.currentLocation = latlong;
                 }, function(err) {});
+
+
+
+
+
+
+
         
         },1000);
     };
@@ -178,4 +236,6 @@ angular.module('app')
       $scope.getStartingPoint(function (pos){
         $scope.initialisationMap(pos)
       })
+
+
 });

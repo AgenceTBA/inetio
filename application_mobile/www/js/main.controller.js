@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('MainCtrl', function($scope, Auth, $state) {
+.controller('MainCtrl', function($scope, Auth, $state,$cordovaDeviceMotion) {
   	$scope.user = Auth.getCurrentUser();
 
   	$scope.go = function (url) {
@@ -11,5 +11,7 @@ angular.module('app')
   	  Auth.logout()
   	  $state.go("login")
   	}
-  	
+
+
+
 });

@@ -10,6 +10,7 @@ import path from 'path';
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/race_sessions', require('./api/race_session'));
   app.use('/api/googleIonicAuths', require('./api/googleIonicAuth'));
   app.use('/api/circuits', require('./api/circuit'));
   app.use('/api/things', require('./api/thing'));
