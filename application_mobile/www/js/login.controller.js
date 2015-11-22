@@ -1,9 +1,17 @@
 angular.module('app')
 
-.controller('LoginCtrl', function($scope, $stateParams,$cordovaOauth, $http, Auth, $state,  $cookies) {
+.controller('LoginCtrl', function($scope, $stateParams,$cordovaOauth, $http, Auth, $state,  $cookies, $ionicHistory) {
 
     $scope.user = {};
     $scope.errors = {};
+
+    $ionicHistory.nextViewOptions({
+        disableBack: true
+    });
+
+    $scope.$on('$ionicView.beforeEnter', function (e, data) {
+        $scope.$root.showMenuIcon = false;
+    });
 
     $scope.googleLogin = function() {
         $cordovaOauth.google("951692337658-rqcr7022vdhqi5pggau4m2gjdbddsg20.apps.googleusercontent.com", [
