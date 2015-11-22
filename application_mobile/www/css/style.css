@@ -1,18 +1,12 @@
 /* Empty. Add your own CSS if you like */
-<<<<<<< Updated upstream
-#map {
-    height: 35%;
-    width: 100%;
-}
 .scroll {
     height: 100%;
 }
-=======
 
 .bg-login{
 	position: absolute;
 	top: 0;
-	left: 0;
+	left: -140%;
 	height: 100vh;
 }
 
@@ -64,4 +58,50 @@
 	background-color: #db4437 !important;
 }
 
->>>>>>> Stashed changes
+/***** Race Mode *****/
+
+.bg-race{
+  background-image: url("../img/bg-race.png");
+  background-size: cover;
+}
+
+.chrono{
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+.bg-race h1{
+	color: #fff;
+	text-shadow: 2px 2px #000;
+	font-size: 22px;
+}
+
+.bg-race .btn-race{
+	float: left;
+	width: 50% !important;
+  	height: 50px;
+  	box-shadow: 1px 1.732px 5px 0px rgb( 0, 0, 0 );
+  	border: none;
+	border-radius: 0;
+	margin: 0 auto;
+	color: #fff;
+	position: absolute;
+	bottom:40%;
+}
+
+.bg-race .btn-race-go{
+	background: #24272C !important;
+}
+
+.bg-race .btn-race-stop{
+	background-color: #db4437 !important;
+	margin-left: 50%;
+}
+
+#map{
+	height: 40% !important;
+	width: 100%;
+	position: absolute !important;
+	bottom: 0 !important;
+}
