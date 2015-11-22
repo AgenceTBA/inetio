@@ -107,37 +107,51 @@ angular.module('applicationWebApp')
   $scope.animationsEnabled = true;
 
   $scope.open = function (size, user) {
-    console.log(user)
     $scope.moreInfo = user
-    if (user.provider == "google"){
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'googleModal.html',
-        controller: 'ModalInstanceCtrl',
-        size: size,
-        resolve: {
-          items: function () {
-            return $scope.moreInfo;
-          }
-        }
-      });
-    } else if (user.provider == "local") {
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'localModal.html',
-        controller: 'ModalInstanceCtrl',
-        size: size,
-        resolve: {
-          items: function () {
-            return $scope.moreInfo;
-          }
-        }
-      });
-    }
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
+$http
+    .get('/api/race_sessions/', {
+        params: {
+            email: user.email,
+        }
+     })
+     .success(function (response,status) {
+      if (response){
+        $scope.moreInfo['sessions'] = response
+      } else {
+        $scope.moreInfo['sessions'] = []
+      }
+      console.log($scope.moreInfo)
+      if (user.provider == "google"){
+        var modalInstance = $uibModal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: 'googleModal.html',
+          controller: 'ModalInstanceCtrl',
+          size: size,
+          resolve: {
+            items: function () {
+              return $scope.moreInfo;
+            }
+          }
+        });
+      } else if (user.provider == "local") {
+        var modalInstance = $uibModal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: 'localModal.html',
+          controller: 'ModalInstanceCtrl',
+          size: size,
+          resolve: {
+            items: function () {
+              return $scope.moreInfo;
+            }
+          }
+        });
+      }
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+      });
     });
   };
 
