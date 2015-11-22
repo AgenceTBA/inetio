@@ -11,7 +11,7 @@ angular.module('app')
 
     $scope.signout = function () {
       Auth.logout();
-      $state.go("app.login");
+      $state.go("login");
     }
   
     //information récuperer

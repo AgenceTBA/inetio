@@ -55,14 +55,10 @@ angular.module('app', [
     controller: 'AppCtrl'
   })
 
-  .state('app.login', {
+  .state('login', {
     url: '/login',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl'
-      }
-    }
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
   })
 
   .state('app.race', {

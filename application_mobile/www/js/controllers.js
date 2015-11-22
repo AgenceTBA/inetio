@@ -217,7 +217,7 @@ $scope.$on('$destroy', function() {
   }
   $scope.signout = function () {
     Auth.logout()
-    $state.go("app.login")
+    $state.go("login")
   }
   $scope.chosenRace = function (_idCircuit) {
     $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){
@@ -248,7 +248,7 @@ $scope.$on('$destroy', function() {
   }
   $scope.signout = function () {
     Auth.logout()
-    $state.go("app.login")
+    $state.go("login")
   }
   $scope.chosenRace = function (_idCircuit) {
     $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){
@@ -317,7 +317,7 @@ $scope.$on('$destroy', function() {
   }
   $scope.signout = function () {
     Auth.logout()
-    $state.go("app.login")
+    $state.go("login")
   }
 })
 
@@ -329,7 +329,7 @@ $scope.$on('$destroy', function() {
   }
   $scope.signout = function () {
     Auth.logout()
-    $state.go("app.login")
+    $state.go("login")
   }
 
   //information récuperer

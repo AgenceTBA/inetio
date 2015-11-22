@@ -13,7 +13,7 @@ angular.module('app')
 
     $scope.signout = function () {
       Auth.logout()
-      $state.go("app.login")
+      $state.go("login")
     }
 
     $scope.chosenRace = function (_idCircuit) {
