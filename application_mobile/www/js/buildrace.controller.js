@@ -116,6 +116,7 @@ $scope.showAlert = function() {
     $scope.data['center'] = $scope.session.parcours
     $scope.data['parcours'] = $scope.session.parcours
     $scope.data['center'] = $scope.session['startingPoint']
+    $scope.data['auteur'] = $scope.user.email
 
     if ($scope.session.round > 0){
         $http({

@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var CircuitSchema = new Schema({
 	nom: String,
+	auteur: String,
 	center: {
 		longitude: Number,
 		latitude: Number
