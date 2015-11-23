@@ -87,6 +87,15 @@ angular.module('app', [
       }
     }
   })
+  .state('app.buildrace', {
+    url: '/buildrace',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/buildrace.html',
+        controller: 'BuildRaceCtrl'
+      }
+    }
+  })
   .state('app.car', {
       url: '/car',
       views: {

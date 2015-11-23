@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('RaceModeCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
+.controller('BuildRaceCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
     var TOLERANCE = 1
@@ -68,7 +68,96 @@ angular.module('app')
         $scope.start()
     }
  // An alert dialog
- $scope.showAlert = function() {
+
+
+ /*
+var CircuitSchema = new Schema({
+    nom: String,
+    center: {
+        longitude: Number,
+        latitude: Number
+    },
+    parcours: [{
+      lng: Number,
+      lat: Number
+    }],
+    date: { type: Date, default: Date.now },
+    active: Boolean
+});
+ */
+
+// Triggered on a button click, or some other target
+$scope.showAlert = function() {
+  $scope.data = {}
+
+  // An elaborate, custom popup
+  var myPopup = $ionicPopup.show({
+    template: '<input type="text" ng-model="data.nom">',
+    title: 'Nom',
+    subTitle: 'Entrez un nom pour ce circuit',
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Sauvergarder</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.nom) {
+            //don't allow the user to close unless he enters wifi password
+            e.preventDefault();
+          } else {
+            return $scope.data.nom;
+          }
+        }
+      }
+    ]
+  });
+  myPopup.then(function(res) {
+    $scope.data['center'] = $scope.session.parcours
+    $scope.data['parcours'] = $scope.session.parcours
+    $scope.data['center'] = $scope.session['startingPoint']
+
+    if ($scope.session.round > 0){
+        $http({
+            url: 'http://inetio.coolcode.fr/api/circuits',
+            method: "POST",
+            data: $scope.data
+        })
+        .then(function(response) {
+           var alertPopup = $ionicPopup.alert({
+            title: 'Vous avez mis fin à votre session',
+             template: 'C est dans la boite :D'
+           });
+           alertPopup.then(function(res) {
+                $state.go('app.main')
+           });  
+        }, 
+        function(response) { // optional
+           var alertPopup = $ionicPopup.alert({
+             title: 'Un probleme est survenue',
+             template: 'Aie aie, désole on a un probleme'
+           });
+           alertPopup.then(function(res) {
+                $state.go('app.main')
+           });  
+        });        
+    } else {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Vous avez mis fin à votre session',
+         template: 'Oh, meme pas un tour de fait ?? Je n enregistre pas ça'
+       });
+       alertPopup.then(function(res) {
+            $state.go('app.main')
+       });  
+    }
+
+  });
+  $timeout(function() {
+     myPopup.close(); //close the popup after 3 seconds for some reason
+  }, 30000);
+ };
+
+ $scope.showAlert2 = function() {
     //verif si user a bien fait un tour
     if ($scope.session.round > 0){
        var alertPopup = $ionicPopup.alert({
@@ -77,7 +166,7 @@ angular.module('app')
        });
        alertPopup.then(function(res) {
         $http({
-            url: 'http://inetio.coolcode.fr/api/race_sessions',
+            url: 'http://inetio.coolcode.fr/api/circuit',
             method: "POST",
             data: $scope.session
         })
@@ -151,48 +240,46 @@ angular.module('app')
                 maximumAge: 0,
                 timeout: 10000
             };
-        $cordovaDeviceMotion.getCurrentAcceleration().then(function(result) {
-            $scope.angle = Math.round(Math.abs(result.x) * 10)
-            if ($scope.angle > $scope.session.bestAngler)
-                $scope.session.bestAngler = $scope.angle 
-        }, function(err) {
-          // An error occurred. Show a message to the user
-        });
         $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
             latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
 
             $scope.latitude  = pos.coords.latitude
             $scope.longitude = pos.coords.longitude
-            $scope.racing.currentSpeed = pos.coords.speed
 
             //RECORD DES POSITIONS AU COURS DU TRAJET
             if (!$scope.session.parcours) 
                 $scope.session.parcours = []
 
-            $scope.session.parcours.push({longitude: $scope.longitude, latitude: $scope.latitude})
-
-            //ON CALCULE LA VMAX
-            if ($scope.session.vMax < $scope.racing.currentSpeed) 
-                $scope.session.vMax = $scope.racing.currentSpeed
+            $scope.session.parcours.push({lng: $scope.longitude, lat: $scope.latitude})
 
             //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
             //SI ON EST AU ROUND 0 CAS SPECIAL
             if ((distance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
             {
                 $scope.inStartZone = true
-                $scope.session.round ++;
-                if ($scope.session.bestLapTime < $scope.counter) 
-                    $scope.session.bestLapTime = $scope.counter
+                $scope.session.round++
+                $scope.stoploop();
             } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
                 $scope.inStartZone = false
             } else {}
+
             $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
-            
+/*            
             $scope.marker = new google.maps.Marker({
                 position: $scope.myLatlng,
                 map: $scope.map,
                 icon: './img/circle.png'
             });
+*/
+            $scope.flightPath = new google.maps.Polyline({
+                map: $scope.map,
+                path: $scope.session.parcours,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+              });
+
 
             $scope.map.panTo($scope.myLatlng);
                 $rootScope.currentLocation = latlong;
@@ -209,7 +296,7 @@ angular.module('app')
     }
     $scope.signout = function () {
       Auth.logout()
-      $state.go("login")
+      $state.go("app.login")
     }
     $scope.chosenRace = function (_idCircuit) {
       $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){

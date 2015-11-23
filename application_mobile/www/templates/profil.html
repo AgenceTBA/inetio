@@ -10,18 +10,18 @@
         <p ng-if="user.sessions.length == 0">{{user.google.displayName}} n a participé à aucune course </p>
         <table style="width:100%" ng-if="user.sessions.length != 0">
           <tr >
+            <td>Date</td>
             <td>Meilleurs Temps</td> 
             <td>Vitesse Maximum</td>
             <td>Nombre de tour</td>
             <td>Angle de plus élevé</td>
-            <td>Derniere date</td>
           </tr>
           <tr ng-repeat="s in user.sessions">
+            <td>{{s.date}}</td>
             <td>{{s.bestTime}}</td>
             <td>{{s.vMax}}</td> 
             <td>{{s.round}}</td>
             <td>{{s.bestAngler}}</td>
-            <td>{{s.date}}</td>
           </tr>
         </table>
     </div>

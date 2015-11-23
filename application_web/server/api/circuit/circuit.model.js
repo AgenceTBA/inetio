@@ -9,6 +9,10 @@ var CircuitSchema = new Schema({
 		longitude: Number,
 		latitude: Number
 	},
+    parcours: [{
+      lng: Number,
+      lat: Number
+    }],
 	date: { type: Date, default: Date.now },
 	active: Boolean
 });
