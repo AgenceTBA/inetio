@@ -59,6 +59,12 @@ angular.module('app', [
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
+
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'SignupCtrl'
+  })
   
   .state('app.profil', {
     url: '/profil',
