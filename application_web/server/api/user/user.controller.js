@@ -46,7 +46,9 @@ exports.create = function(req, res, next) {
   console.log("-------")
   console.log(req.body.newGoogleUser)
   console.log("-------")
-  if (req.body.newGoogleUser.provider == 'google'){
+
+  if (req.body.newGoogleUser){
+  if (req.body.newGoogleUser.provider && req.body.newGoogleUser.provider == 'google'){
     console.log(req.body.newGoogleUser.google.id)
     User.findOneAsync({
       'google.id': req.body.newGoogleUser.google.id
@@ -80,6 +82,8 @@ exports.create = function(req, res, next) {
       .catch(function(err) {
               res.json({ token: '' });
       });
+
+
   } else {
     newUser.provider = 'local';
     newUser.role = 'user';
@@ -93,6 +97,20 @@ exports.create = function(req, res, next) {
       })
       .catch(validationError(res));
   }
+  } else {
+    newUser.provider = 'local';
+    newUser.role = 'user';
+    console.log(newUser);
+    newUser.saveAsync()
+      .spread(function(user) {
+        var token = jwt.sign({ _id: user._id }, config.secrets.session, {
+          expiresInMinutes: 60 * 5
+        });
+        res.json({ token: token });
+      })
+      .catch(validationError(res));
+  }
+
 };
 
 /**

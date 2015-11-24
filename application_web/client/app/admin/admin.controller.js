@@ -138,7 +138,7 @@ $http
         var modalInstance = $uibModal.open({
           animation: $scope.animationsEnabled,
           templateUrl: 'localModal.html',
-          controller: 'ModalInstanceCtrl',
+          controller: 'LocalModalInstanceCtrl',
           size: size,
           resolve: {
             items: function () {
