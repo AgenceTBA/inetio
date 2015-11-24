@@ -1,8 +1,8 @@
-<ion-view view-title="" class="bg-race">
+<ion-view view-title="Build Race" class="bg-race">
   <ion-content>
     <h1 class="chrono"> {{counter  | secondsToDateTime | date:'HH:mm:ss'}} </h1>
-    <button ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
-    <button ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
+    <button ng-show="startStop" ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
+    <button ng-show="!startStop" ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
     <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
   </ion-content>
 
