@@ -14,14 +14,15 @@ angular.module('app')
         Auth.createUser({
           nom: form.nom ,
           prenom: form.prenom,
-          date: start,
+          date: form.start,
           sexe: form.sexe,
           email: form.email,
           password: form.password
         })
         .then(function() {
+          Auth.
           // Account created, redirect to home
-          $state.go('login');
+          $state.go('app.main');
         })
         .catch(function(err) {
           err = err.data;
