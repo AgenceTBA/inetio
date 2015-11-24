@@ -5,6 +5,24 @@ angular.module('app')
     //VARIABLE GLOBAL
     $scope.user = Auth.getCurrentUser()
     $scope.storage = $localStorage
+    $scope.CircuitComplete = [];
+
+    $scope.$watch('filterOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.listCircuit = $scope.CircuitComplete.filter(function(item) {
+                var ft = $scope.filterOptions.filterText.toLowerCase();
+                return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
+            });
+            if (!$scope.$$phase) {  
+                $scope.$apply();
+            }
+        }
+    }, true);
+
+    $scope.filterOptions = {
+        filterText: "",
+        useExternalFilter: true
+    };
 
     //FONCTION NAVIGATION
     $scope.go = function (url) {
@@ -27,7 +45,8 @@ angular.module('app')
 
     //MAIN DE LA PAGE
     $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
-      $scope.listCircuit = res.data
+      $scope.CircuitComplete = res.data;
+      $scope.listCircuit = $scope.CircuitComplete;
       //$scope.currentPosition()
     })
 });

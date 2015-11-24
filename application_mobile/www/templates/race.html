@@ -1,9 +1,17 @@
 <ion-view view-title="">
   <ion-content>
-      <h1>Race: choose a circuit</h3>
+      	
+      	<div class="list list-inset">
+  			<label class="item item-input">
+    			<i class="icon ion-search placeholder-icon"></i>
+    			<input type="text" placeholder="Search" ng-model="filterOptions.filterText">
+  			</label>
+		</div>
+
+  		<center><h3>Choose a circuit</h3></center>
       <ion-list>
         <ion-item ng-repeat="circuit in listCircuit">
-          <div ng-click="chosenRace(circuit._id)">{{circuit.nom}}</div>
+          <div ng-click="chosenRace(circuit._id)"><img src="img/circuit.png" style="width:25px; height: auto;margin-top:5px"> {{circuit.nom}}</div>
         </ion-item>
       </ion-list>
   </ion-content>
