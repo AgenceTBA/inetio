@@ -10,8 +10,8 @@
 
   		<center><h3>Choose a circuit</h3></center>
       <ion-list>
-        <ion-item ng-repeat="circuit in listCircuit">
-          <div ng-click="chosenRace(circuit._id)"><img src="img/circuit.png" style="width:25px; height: auto;margin-top:5px"> {{circuit.nom}}</div>
+        <ion-item ng-repeat="circuit in listCircuit | orderBy:'distanceBrut'">
+          <div ng-click="chosenRace(circuit._id)"><img src="img/circuit.png" style="width:25px; height: auto;margin-top:5px"> {{circuit.nom}} ({{circuit.distance}})</div>
         </ion-item>
       </ion-list>
   </ion-content>
