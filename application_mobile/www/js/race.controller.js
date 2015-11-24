@@ -54,7 +54,7 @@ angular.module('app')
     $scope.filterByPostion = function(){
       $scope.getStartingPoint(function(coord){
         for(var i in $scope.CircuitComplete){
-          var distanceCircuit = distance(coord, $scope.CircuitComplete[i].center);
+          var distanceCircuit = distance(coord, $scope.CircuitComplete[i].center)*2;
           $scope.CircuitComplete[i].distanceBrut = distanceCircuit;
           if (distanceCircuit < 1)
             $scope.CircuitComplete[i].distance = parseInt((distanceCircuit * 100)) + "m"
