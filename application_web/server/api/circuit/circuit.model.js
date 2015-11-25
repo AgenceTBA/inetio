@@ -5,10 +5,15 @@ var Schema = mongoose.Schema;
 
 var CircuitSchema = new Schema({
 	nom: String,
+	auteur: String,
 	center: {
 		longitude: Number,
 		latitude: Number
 	},
+    parcours: [{
+      lng: Number,
+      lat: Number
+    }],
 	date: { type: Date, default: Date.now },
 	active: Boolean
 });

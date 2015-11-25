@@ -1,0 +1,51 @@
+<ion-content>
+    <form class="form" name="form" ng-submit="register(form)" novalidate>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold">First Name</span>
+                <input type="text" placeholder="First Name" ng-model="form.prenom">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold" >Last Name</span>
+                <input type="text" placeholder="Last Name" ng-model="form.nom">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold">Birthday</span>
+                <input id="start" type="date" placeholder="Birthday" ng-model="form.start">
+                <label for="start" ng-show="form.start == '' || form.start == undefined" class="placeholderBirthday" ></label>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold">Mail</span>
+                <input type="text" placeholder="Mail" ng-model="form.email">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold">Password</span>
+                <input type="password" name="password" class="form-control" ng-model="form.password" ng-minlength="3" required/>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label  bold">Password</span>
+                <input type="password" name="confirmPassword" class="form-control" ng-model="form.confirmPassword"
+                 match="form.password"
+                 ng-minlength="3" required/>
+            </label>
+            <div class="row left text bg-white">
+                <div class="col-50">
+                    <label class="checkbox">
+                        <input id="type1" type="checkbox" ng-model="form.sexe" ng-true-value="'homme'" ng-false-value="'receiver'">
+                    </label> 
+                    <label for="type1" style="font-size:10px;">Male</label>
+                </div>
+                <div class="col-50">
+                    <label class="checkbox">
+                        <input id="type2" type="checkbox" ng-model="form.sexe" ng-true-value="'femme'" ng-false-value="'sender'">
+                    </label> 
+                    <label for="type2" style="font-size:10px;" >Female</label>
+                </div>
+            </div>
+            <center>
+                <a href="#/login"><button class="button button-light">Back to login</button></a>
+                <button class="button button-balanced" type="submit">Register !</button>
+            </center>
+        </div>
+    </form>
+</ion-content>

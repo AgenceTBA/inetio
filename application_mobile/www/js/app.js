@@ -59,6 +59,12 @@ angular.module('app', [
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
+
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'SignupCtrl'
+  })
   
   .state('app.profil', {
     url: '/profil',
@@ -84,6 +90,15 @@ angular.module('app', [
       'menuContent': {
         templateUrl: 'templates/racemode.html',
         controller: 'RaceModeCtrl'
+      }
+    }
+  })
+  .state('app.buildrace', {
+    url: '/buildrace',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/buildrace.html',
+        controller: 'BuildRaceCtrl'
       }
     }
   })
