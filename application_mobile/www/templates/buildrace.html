@@ -3,7 +3,7 @@
     <h1 class="chrono"> {{counter  | secondsToDateTime | date:'HH:mm:ss'}} </h1>
     <button ng-show="startStop" ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
     <button ng-show="!startStop" ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
-    <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
+    <div id="mapbuild" style= " height : 200px; " data-tap-disabled="true"></div>
   </ion-content>
 
 </ion-view>
