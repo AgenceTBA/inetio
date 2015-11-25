@@ -209,7 +209,7 @@ angular.module('app')
     };
   })
 
-  .factory('Utils', function() {
+  .factory('Utils', function($cordovaGeolocation) {
     return {
 
       toRad: function(value) {
@@ -235,6 +235,18 @@ angular.module('app')
 
         // To Km
         return d * 1.60934;
+      },
+
+      getPosition: function(cb){
+        var options = {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 10000
+        };
+        
+        $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
+          cb({ 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude })
+        })
       }
 
     }
