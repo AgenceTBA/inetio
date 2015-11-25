@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="bg-race signin">
     <form class="form" name="form" ng-submit="register(form)" novalidate>
         <div class="list">
             <label class="item item-input item-stacked-label">
@@ -33,18 +33,18 @@
                     <label class="checkbox">
                         <input id="type1" type="checkbox" ng-model="form.sexe" ng-true-value="'homme'" ng-false-value="'receiver'">
                     </label> 
-                    <label for="type1" style="font-size:10px;">Male</label>
+                    <label for="type1" style="font-size:10px; color: #fff;">Male</label>
                 </div>
                 <div class="col-50">
                     <label class="checkbox">
                         <input id="type2" type="checkbox" ng-model="form.sexe" ng-true-value="'femme'" ng-false-value="'sender'">
                     </label> 
-                    <label for="type2" style="font-size:10px;" >Female</label>
+                    <label for="type2" style="font-size:10px; color: #fff;" >Female</label>
                 </div>
             </div>
             <center>
-                <a href="#/login"><button class="button button-light">Back to login</button></a>
                 <button class="button button-balanced" type="submit">Register !</button>
+                <a href="#/login"><button class="button button-light">Back to login</button></a>
             </center>
         </div>
     </form>
