@@ -52,7 +52,8 @@ angular.module('app')
                 map: $scope.map,
                 icon: './img/start.png'
             })
-            if ($localStorage.raceMode.infoCircuit.end.latitude){
+            console.log($localStorage.raceMode.infoCircuit.end)
+            if ($localStorage.raceMode.infoCircuit.end){
                 $scope.marker = new google.maps.Marker({
                     position: new google.maps.LatLng($localStorage.raceMode.infoCircuit.end.latitude, $localStorage.raceMode.infoCircuit.end.longitude),
                     map: $scope.map,

@@ -217,11 +217,18 @@ angular.module('app')
       },
 
       getDistance: function(pos1, pos2){
-        var lat1 = pos1.latitude;
-        var lon1 = pos1.longitude;
-        var lat2 = pos2.latitude;
-        var lon2 = pos2.longitude;
-
+        if (pos1.latitude){
+          var lat1 = pos1.latitude;
+          var lon1 = pos1.longitude;
+          var lat2 = pos2.latitude;
+          var lon2 = pos2.longitude;          
+        }
+        if (pos1.lat){
+          var lat1 = pos1.lat;
+          var lon1 = pos1.lng;
+          var lat2 = pos2.lat;
+          var lon2 = pos2.lng;          
+        }
         var R = 3958.7558657440545; // Radius of earth in Miles 
         var dLat = this.toRad(lat2-lat1);
         var dLon = this.toRad(lon2-lon1);

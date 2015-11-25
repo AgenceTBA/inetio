@@ -79,7 +79,7 @@ $scope.showAlert = function() {
     $scope.data['isDrag'] = true
     $scope.data['isBuildRace'] = $scope.session.isBuildRace
     $scope.data['end'] = $scope.session.end
-
+    console.log($scope.data)
     $http({
         url: 'http://inetio.coolcode.fr/api/circuits',
         method: "POST",
@@ -113,7 +113,7 @@ $scope.showAlert = function() {
         $scope.stopTimer()
         $scope.session.isDrag = true
         $scope.getStartingPoint(function (pos){
-            $scope.session.end = pos.coords
+            $scope.session.end = pos
             $scope.showAlert()
         })
     }
