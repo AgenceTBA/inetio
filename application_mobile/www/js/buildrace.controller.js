@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('BuildRaceCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
+.controller('BuildRaceCtrl', function(Utils, $timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
     var TOLERANCE = 0.020
@@ -22,26 +22,6 @@ angular.module('app')
             vMax: 0,
             bestAngler: 0
         }
-    function distance(pos1, pos2) {
-        var lat1 = pos1.latitude
-        var lon1 = pos1.longitude
-        var lat2 = pos2.latitude
-        var lon2 = pos2.longitude
-        //Radius of the earth in:  1.609344 miles,  6371 km  | var R = (6371 / 1.609344);
-        var R = 3958.7558657440545; // Radius of earth in Miles 
-        var dLat = toRad(lat2-lat1);
-        var dLon = toRad(lon2-lon1); 
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2); 
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-        var d = R * c;
-        return d;
-    }
-    function toRad(Value) {
-        /** Converts numeric degrees to radians */
-        return Value * Math.PI / 180;
-    }
     //TIMER
     $scope.onTimeout = function(){
         $scope.counter++;
@@ -67,29 +47,9 @@ angular.module('app')
     $scope.record = function () {
         $scope.start()
     }
- // An alert dialog
-
-
- /*
-var CircuitSchema = new Schema({
-    nom: String,
-    center: {
-        longitude: Number,
-        latitude: Number
-    },
-    parcours: [{
-      lng: Number,
-      lat: Number
-    }],
-    date: { type: Date, default: Date.now },
-    active: Boolean
-});
- */
-
 // Triggered on a button click, or some other target
 $scope.showAlert = function() {
   $scope.data = {}
-
   // An elaborate, custom popup
   var myPopup = $ionicPopup.show({
     template: '<input type="text" ng-model="data.nom">',
@@ -113,51 +73,49 @@ $scope.showAlert = function() {
     ]
   });
   myPopup.then(function(res) {
-    $scope.data['center'] = $scope.session.parcours
     $scope.data['parcours'] = $scope.session.parcours
     $scope.data['center'] = $scope.session['startingPoint']
     $scope.data['auteur'] = $scope.user.email
+    $scope.data['isDrag'] = true
+    $scope.data['isBuildRace'] = $scope.session.isBuildRace
+    $scope.data['end'] = $scope.session.end
 
-        $http({
-            url: 'http://inetio.coolcode.fr/api/circuits',
-            method: "POST",
-            data: $scope.data
-        })
-        .then(function(response) {
-           var alertPopup = $ionicPopup.alert({
-            title: 'Vous avez mis fin à votre session',
-             template: 'C est dans la boite :D'
-           });
-           alertPopup.then(function(res) {
-                $state.go('app.main')
-           });  
-        }, 
-        function(response) { // optional
-           var alertPopup = $ionicPopup.alert({
-             title: 'Un probleme est survenue',
-             template: 'Aie aie, désole on a un probleme'
-           });
-           alertPopup.then(function(res) {
-                $state.go('app.main')
-           });  
-        });        
-
-
+    $http({
+        url: 'http://inetio.coolcode.fr/api/circuits',
+        method: "POST",
+        data: $scope.data
+    })
+    .then(function(response) {
+       var alertPopup = $ionicPopup.alert({
+        title: 'Vous avez mis fin à votre session',
+         template: 'C est dans la boite :D'
+       });
+       alertPopup.then(function(res) {
+            $state.go('app.main')
+       });  
+    }, 
+    function(response) { // optional
+       var alertPopup = $ionicPopup.alert({
+         title: 'Un probleme est survenue',
+         template: 'Aie aie, désole on a un probleme'
+       });
+       alertPopup.then(function(res) {
+            $state.go('app.main')
+       });  
+    });        
   });
   $timeout(function() {
      myPopup.close(); //close the popup after 3 seconds for some reason
   }, 30000);
  };
-
-
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
         $scope.session.isDrag = true
-      $scope.getStartingPoint(function (pos){
-        $scope.session.end = pos
-        $scope.showAlert()
-      })
+        $scope.getStartingPoint(function (pos){
+            $scope.session.end = pos.coords
+            $scope.showAlert()
+        })
     }
     $scope.start = function () {
         $scope.session = {
@@ -195,48 +153,35 @@ $scope.showAlert = function() {
         mainloop = undefined;
       }
     }
-
     $scope.startloop = function(){
         if (angular.isDefined(mainloop)) 
             return;
         mainloop = $interval(function(){
-            var options = {
-                enableHighAccuracy: true,
-                maximumAge: 0,
-                timeout: 10000
-            };
+        var options = {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 10000
+        };
         $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
             latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
-
             $scope.latitude  = pos.coords.latitude
             $scope.longitude = pos.coords.longitude
-
             //RECORD DES POSITIONS AU COURS DU TRAJET
             if (!$scope.session.parcours) 
                 $scope.session.parcours = []
-
             $scope.session.parcours.push({lng: $scope.longitude, lat: $scope.latitude})
-
             //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
             //SI ON EST AU ROUND 0 CAS SPECIAL
-            if ((distance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
+            if ((Utils.getDistance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
             {
                 $scope.inStartZone = true
                 $scope.session.round++
                 $scope.session.isDrag = false
                 $scope.stoploop();
-            } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
+            } else if (($scope.inStartZone == true) && (Utils.getDistance($scope.session.startingPoint, latlong) > TOLERANCE)) {
                 $scope.inStartZone = false
             } else {}
-
             $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
-/*            
-            $scope.marker = new google.maps.Marker({
-                position: $scope.myLatlng,
-                map: $scope.map,
-                icon: './img/circle.png'
-            });
-*/
             $scope.flightPath = new google.maps.Polyline({
                 map: $scope.map,
                 path: $scope.session.parcours,
@@ -245,8 +190,6 @@ $scope.showAlert = function() {
                 strokeOpacity: 1.0,
                 strokeWeight: 2
               });
-
-
             $scope.map.panTo($scope.myLatlng);
                 $rootScope.currentLocation = latlong;
             }, function(err) {});      
@@ -259,10 +202,6 @@ $scope.showAlert = function() {
     //FONCTION NAVIGATION
     $scope.go = function (url) {
       $state.go(url)
-    }
-    $scope.signout = function () {
-      Auth.logout()
-      $state.go("app.login")
     }
     $scope.chosenRace = function (_idCircuit) {
       $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){
@@ -280,6 +219,4 @@ $scope.showAlert = function() {
       $scope.getStartingPoint(function (pos){
         $scope.initialisationMap(pos)
       })
-
-
 });

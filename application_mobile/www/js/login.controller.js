@@ -16,8 +16,6 @@ angular.module('app')
 
     $scope.googleLogin = function() {
             $scope.load = true
-
-
         $cordovaOauth.google("951692337658-rqcr7022vdhqi5pggau4m2gjdbddsg20.apps.googleusercontent.com", [
             "https://www.googleapis.com/auth/urlshortener",
             "https://www.googleapis.com/auth/userinfo.email"
@@ -75,6 +73,7 @@ angular.module('app')
             });
 
         }, function(error) {
+                        $scope.load = false
             console.log("err2 " + error);
         });
     }
@@ -87,7 +86,6 @@ angular.module('app')
             password: $scope.user.password
         })
         .then(function() {
-            //$scope.state.go('app.main');
             $scope.load = false
             $state.go('app.main');
         })
