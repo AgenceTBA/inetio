@@ -247,7 +247,7 @@ angular.module('app')
       getDistanceDisplay: function(distance){
         var result = 0;
         if (distance < 1)
-          result = parseInt((distance * 100)) + "m";
+          result = Math.round(distance * 1000) + "m";
         else {
           result = (Math.round(distance * 10) / 10) + "km";
         }
