@@ -101,7 +101,6 @@ angular.module('app')
     }
  };
 
-
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
@@ -159,45 +158,45 @@ angular.module('app')
       // An error occurred. Show a message to the user
     });
 
-            $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
-                latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
+    $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
+        latlong =  { 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude };
 
-                $scope.latitude  = pos.coords.latitude
-                $scope.longitude = pos.coords.longitude
-                $scope.racing.currentSpeed = pos.coords.speed
+        $scope.latitude  = pos.coords.latitude
+        $scope.longitude = pos.coords.longitude
+        $scope.racing.currentSpeed = pos.coords.speed
 
-                //RECORD DES POSITIONS AU COURS DU TRAJET
-                if (!$scope.session.parcours) 
-                    $scope.session.parcours = []
+        //RECORD DES POSITIONS AU COURS DU TRAJET
+        if (!$scope.session.parcours) 
+            $scope.session.parcours = []
 
-                $scope.session.parcours.push({longitude: $scope.longitude, latitude: $scope.latitude})
+        $scope.session.parcours.push({longitude: $scope.longitude, latitude: $scope.latitude})
 
-                //ON CALCULE LA VMAX
-                if ($scope.session.vMax < $scope.racing.currentSpeed) 
-                    $scope.session.vMax = $scope.racing.currentSpeed
-    
-                //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
-                //SI ON EST AU ROUND 0 CAS SPECIAL
-                if ((distance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
-                {
-                    $scope.inStartZone = true
-                    $scope.session.round ++;
-                    if ($scope.session.bestLapTime < $scope.counter) 
-                        $scope.session.bestLapTime = $scope.counter
-                } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
-                    $scope.inStartZone = false
-                } else {}
-                $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
-                
-                $scope.marker = new google.maps.Marker({
-                    position: $scope.myLatlng,
-                    map: $scope.map,
-                    icon: './img/circle.png'
-                });
+        //ON CALCULE LA VMAX
+        if ($scope.session.vMax < $scope.racing.currentSpeed) 
+            $scope.session.vMax = $scope.racing.currentSpeed
 
-                $scope.map.panTo($scope.myLatlng);
-                    $rootScope.currentLocation = latlong;
-                }, function(err) {});
+        //ON COMPTE LE NOMBRE DE TOUR ET LE MEILLEURS TEMPS AU TOURS
+        //SI ON EST AU ROUND 0 CAS SPECIAL
+        if ((distance($scope.session.startingPoint, latlong) <= TOLERANCE) && ($scope.inStartZone == false))
+        {
+            $scope.inStartZone = true
+            $scope.session.round ++;
+            if ($scope.session.bestLapTime < $scope.counter) 
+                $scope.session.bestLapTime = $scope.counter
+        } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
+            $scope.inStartZone = false
+        } else {}
+        $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
+        
+        $scope.marker = new google.maps.Marker({
+            position: $scope.myLatlng,
+            map: $scope.map,
+            icon: './img/circle.png'
+        });
+
+        $scope.map.panTo($scope.myLatlng);
+            $rootScope.currentLocation = latlong;
+        }, function(err) {});
 
 
 

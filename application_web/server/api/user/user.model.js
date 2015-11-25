@@ -34,7 +34,7 @@ var UserSchema = new Schema({
     vMax: Number,
     round: Number,
     bestAngler: Number,
-    date: { type: Date, default: Date.now },
+    date: { type: Date, default: Date.now }
   }],
   password: String,
   provider: String,

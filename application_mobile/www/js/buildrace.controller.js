@@ -118,7 +118,6 @@ $scope.showAlert = function() {
     $scope.data['center'] = $scope.session['startingPoint']
     $scope.data['auteur'] = $scope.user.email
 
-    if ($scope.session.round > 0){
         $http({
             url: 'http://inetio.coolcode.fr/api/circuits',
             method: "POST",
@@ -142,15 +141,7 @@ $scope.showAlert = function() {
                 $state.go('app.main')
            });  
         });        
-    } else {
-       var alertPopup = $ionicPopup.alert({
-         title: 'Vous avez mis fin à votre session',
-         template: 'Oh, meme pas un tour de fait ?? Je n enregistre pas ça'
-       });
-       alertPopup.then(function(res) {
-            $state.go('app.main')
-       });  
-    }
+
 
   });
   $timeout(function() {
@@ -195,6 +186,7 @@ $scope.showAlert = function() {
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
+        $scope.session.isDrag = true
         $scope.showAlert()
     }
     $scope.start = function () {
@@ -259,6 +251,7 @@ $scope.showAlert = function() {
             {
                 $scope.inStartZone = true
                 $scope.session.round++
+                $scope.session.isDrag = false
                 $scope.stoploop();
             } else if (($scope.inStartZone == true) && (distance($scope.session.startingPoint, latlong) > TOLERANCE)) {
                 $scope.inStartZone = false

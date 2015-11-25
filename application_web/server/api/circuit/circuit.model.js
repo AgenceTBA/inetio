@@ -15,6 +15,7 @@ var CircuitSchema = new Schema({
       lat: Number
     }],
 	date: { type: Date, default: Date.now },
+	isDrag: Number,
 	active: Boolean
 });
 
