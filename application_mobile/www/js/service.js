@@ -237,13 +237,23 @@ angular.module('app')
         return d * 1.60934;
       },
 
+      getDistanceDisplay: function(distance){
+        var result = 0;
+        if (distance < 1)
+          result = parseInt((distance * 100)) + "m";
+        else {
+          result = (Math.round(distance * 10) / 10) + "km";
+        }
+        return result; 
+      },
+
       getPosition: function(cb){
         var options = {
             enableHighAccuracy: true,
             maximumAge: 0,
             timeout: 10000
         };
-        
+
         $cordovaGeolocation.getCurrentPosition(options).then(function (pos) {
           cb({ 'latitude' : pos.coords.latitude, 'longitude' : pos.coords.longitude })
         })

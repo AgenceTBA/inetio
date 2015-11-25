@@ -49,9 +49,9 @@ angular.module('app')
                 $scope.CircuitComplete[i].distanceBrut = distanceCircuit;
           
                 if (distanceCircuit < 1)
-                    $scope.CircuitComplete[i].distance = parseInt((distanceCircuit * 100)) + "m"
+                    $scope.CircuitComplete[i].distance = Utils.getDistanceDisplay(distanceCircuit);
                 else
-                    $scope.CircuitComplete[i].distance = parseInt(distanceCircuit) + "km"
+                    $scope.CircuitComplete[i].distance = Utils.getDistanceDisplay(distanceCircuit);
 
                 if (distanceCircuit < 10)
                     $scope.listCircuit.push($scope.CircuitComplete[i]);
