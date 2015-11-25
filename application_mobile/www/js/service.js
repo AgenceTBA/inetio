@@ -209,6 +209,37 @@ angular.module('app')
     };
   })
 
+  .factory('Utils', function() {
+    return {
+
+      toRad: function(value) {
+        return value * Math.PI / 180;
+      },
+
+      getDistance: function(pos1, pos2){
+        var lat1 = pos1.latitude;
+        var lon1 = pos1.longitude;
+        var lat2 = pos2.latitude;
+        var lon2 = pos2.longitude;
+
+        var R = 3958.7558657440545; // Radius of earth in Miles 
+        var dLat = this.toRad(lat2-lat1);
+        var dLon = this.toRad(lon2-lon1);
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2); 
+
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c;
+
+        // To Km
+        return d * 1.60934;
+      }
+
+    }
+  })
+
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
         return new Date(1970, 0, 1).setSeconds(seconds);
