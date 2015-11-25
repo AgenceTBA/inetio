@@ -4,29 +4,10 @@
     <h1>Current Speed : {{session.vMax}}</h1>
     <h1>Current Lap : {{session.round}}</h1>
     <h1>BEST ANGLE X : {{session.bestAngler}}</h1>
-<button ng-show="startStop" ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
-<button ng-show="startStop" ng-click="go('app.main')" class="btn-race btn-race-go">Annuler</button>
+    <button ng-show="startStop" ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
     <button ng-show="!startStop" ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
+    <button ng-show="startStop" ng-click="go('app.main')" class="btn-race btn-race-stop">Annuler</button>
     <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
   </ion-content>
 
 </ion-view>
-
-
-        <!--
-      <div class="card">
-        <div class="item item-text-wrap">
-          <div id="map" style="height:200px;" data-tap-disabled="true"></div>                
-        </div>
-      </div>
-
-      <h1> CHRONO: {{counter  | secondsToDateTime | date:'HH:mm:ss'}} </h1>
-      <h1> LONG: {{longitude}} </h1>
-      <h1> LAT: {{latitude}} </h1>
-      <h1>Current Speed : {{session.vMax}}</h1>
-      <h1>Current Lap : {{session.round}}</h1>
-      <h1>BEST ANGLE X : {{session.bestAngler}}</h1>
-
-
-
-    -->

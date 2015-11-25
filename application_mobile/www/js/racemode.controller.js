@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('RaceModeCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
+.controller('RaceModeCtrl', function(Utils,$timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
     var TOLERANCE = 1
@@ -115,7 +115,7 @@ angular.module('app')
             bestAngler: 0
         }
       //ON RECUPERE LE POINT DE DEPART
-      $scope.getStartingPoint(function (pos){
+      Utils.getPosition(function (pos){
         $scope.session['startingPoint'] = pos
         //initMap
         $scope.initialisationMap(pos)
@@ -193,7 +193,6 @@ angular.module('app')
             map: $scope.map,
             icon: './img/circle.png'
         });
-
         $scope.map.panTo($scope.myLatlng);
             $rootScope.currentLocation = latlong;
         }, function(err) {});       
@@ -212,7 +211,7 @@ angular.module('app')
       $state.go("login")
     }
     //INIT DE LA MAP
-  $scope.getStartingPoint(function (pos){
+  Utils.getPosition(function (pos){
     $scope.initialisationMap(pos)
   })
 
