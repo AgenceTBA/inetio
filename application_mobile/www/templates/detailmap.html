@@ -1,10 +1,14 @@
 <ion-view view-title="" class="bg-race">
   <ion-content>
     <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
-    <h1 class="chrono"> {{counter  | secondsToDateTime | date:'HH:mm:ss'}} </h1>
-    <h1>Current Speed : {{session.vMax}}</h1>
-    <h1>Current Lap : {{session.round}}</h1>
-    <h1>BEST ANGLE X : {{session.bestAngler}}</h1>
+    <div ng-repeat="row in allSessionInThisCircuit" ng-if="row.bestTime">
+      {{row}}
+      <h1 class="chrono">Meilleurs temps:  {{row.bestTime}} </h1>
+      <h1>vMax: {{row.vMax}} </h1>
+      <h1>Nb tours: {{row.round}} </h1>
+
+    </div>
+
     <button ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
     <button ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
   </ion-content>

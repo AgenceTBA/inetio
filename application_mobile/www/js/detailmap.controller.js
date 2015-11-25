@@ -226,9 +226,7 @@ angular.module('app')
     //MAIN DE LA PAGE
 
     //INIT DE LA MAP
-      $scope.getStartingPoint(function (pos){
-        $scope.initialisationMap(pos)
-      })
+
 /*
 
 $localStorage.raceMode = {
@@ -236,29 +234,36 @@ $localStorage.raceMode = {
 }
 
 */
-console.log($localStorage.raceMode)
-
-            $scope.flightPath = new google.maps.Polyline({
-                map: $scope.map,
-                path: $localStorage.raceMode.infoCircuit.parcours,
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2
-              });
-
+$http.get('http://inetio.coolcode.fr/api/race_sessions/' + $localStorage.raceMode.infoCircuit._id).then(function (res){
+  $scope.allSessionInThisCircuit = res.data
+  console.log($scope.allSessionInThisCircuit)
+  console.log($localStorage.raceMode.infoCircuit)
+      $scope.getStartingPoint(function (pos){
+        $scope.initialisationMap(pos)
+        $scope.flightPath = new google.maps.Polyline({
+            map: $scope.map,
+            path: $localStorage.raceMode.infoCircuit.parcours,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          })
+        $scope.marker = new google.maps.Marker({
+            position: new google.maps.LatLng($localStorage.raceMode.infoCircuit.center.latitude, $localStorage.raceMode.infoCircuit.center.longitude),
+            map: $scope.map,
+            icon: './img/start.png'
+        })
+        if ($localStorage.raceMode.infoCircuit.end.latitude){
             $scope.marker = new google.maps.Marker({
-                position: new google.maps.LatLng($localStorage.raceMode.infoCircuit.center.latitude, $localStorage.raceMode.infoCircuit.center.longitude),
+                position: new google.maps.LatLng($localStorage.raceMode.infoCircuit.end.latitude, $localStorage.raceMode.infoCircuit.end.longitude),
                 map: $scope.map,
-                icon: './img/circle.png'
-            });
+                icon: './img/end.png'
+            })
+        }
+      })
+});
 
 
-
-    $http.get('http://inetio.coolcode.fr/api/race_sessions/' + $localStorage.raceMode.infoCircuit._id).then(function (res){
-      $scope.allSessionInThisCircuit = res.data
-console.log($scope.allSessionInThisCircuit)
-    });
 
 
 

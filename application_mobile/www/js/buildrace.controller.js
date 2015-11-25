@@ -3,7 +3,7 @@ angular.module('app')
 .controller('BuildRaceCtrl', function($timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
-    var TOLERANCE = 1
+    var TOLERANCE = 0.020
     $scope.user = Auth.getCurrentUser()
     $scope.storage = $localStorage
     $scope.time = Date.now();
