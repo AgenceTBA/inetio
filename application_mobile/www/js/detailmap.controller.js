@@ -28,8 +28,7 @@ angular.module('app')
         var m  = 0
         for (var i=0; i < tab.length; i ++){
             if (tab[i + 1]){
-                m += Utils.getDistance(tab[i], tab[i + 1]) * 2
-                console.log(tab[i])
+                m += Utils.getDistance(tab[i], tab[i + 1])
             }
         }
         return m;
