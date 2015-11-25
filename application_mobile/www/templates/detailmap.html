@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="row">
-            <h1> Distance:{{distanceMap}}</h1>
+            <h1 ng-if ='distanceMap != 0'> Distance:{{distanceMap}}</h1>
 
 </div>
     <button ng-click="go('app.racemode')" class="btn-race btn-race-go">Go</button>

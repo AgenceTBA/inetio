@@ -211,7 +211,7 @@ angular.module('app')
 
   .factory('Utils', function($cordovaGeolocation) {
     return {
-
+      
       toRad: function(value) {
         return value * Math.PI / 180;
       },
