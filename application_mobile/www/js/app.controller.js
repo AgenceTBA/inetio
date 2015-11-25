@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, Auth, $state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -23,6 +23,11 @@ angular.module('app')
   $scope.closeLogin = function() {
     $scope.modal.hide();
   };
+
+  $scope.signout = function () {
+      Auth.logout()
+      $state.go("login")
+    }
 
   // Open the login modal
   $scope.login = function() {
