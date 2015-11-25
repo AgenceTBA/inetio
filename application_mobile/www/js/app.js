@@ -54,6 +54,12 @@ angular.module('app', [
     controller: 'AppCtrl'
   })
 
+  .state('detailmap', {
+    url: '/detailmap',
+    templateUrl: 'templates/detailmap.html',
+    controller: 'DetailMapCtrl'
+  })
+
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',

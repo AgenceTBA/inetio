@@ -40,7 +40,7 @@ angular.module('app')
         $localStorage.raceMode = {
           infoCircuit: res.data
         }
-        $state.go('app.racemode')
+        $state.go('app.detailmap')
       })
     }
 
