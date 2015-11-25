@@ -49,6 +49,19 @@
 	border: none;
 }
 
+.inline-button{
+	text-align: center;
+}
+
+.modal-login .item-inline{
+	display: inline-block;
+	padding: 0;
+}
+
+.modal-login .item-inline .co{
+	width: 125px !important;
+}
+
 .google-co, .co{
 	width: 250px !important;
   	height: 50px;
@@ -58,12 +71,24 @@
 	margin: 0 auto;
 }
 
+.modal-login .item{
+	padding-bottom: 0;
+}
+
+.modal-login .google-co{
+	margin-top: 33%;
+}
+
 .co{
 	background: #24272C !important;
 }
 
 .google-co{
 	background-color: #db4437 !important;
+}
+
+.top-margin{
+	margin-top: 20%;
 }
 
 /***** Race Mode *****/

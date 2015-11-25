@@ -7,14 +7,16 @@
   <ion-content ng-show="!load">
       <div class="list">
         <label class="item">
-          <button class="button button-block button-positive co" ng-click="go('locallogin')">Login</button>
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive co" ng-click="go('signup')">Signup</button>
-        </label>
-        <label class="item">
           <button class="button button-block button-positive google-co" ng-click="googleLogin()" >Connect with Google</button>
         </label>
+        <div class="inline-button">
+          <label class="item item-inline">
+            <button class="button button-block button-positive co" ng-click="go('locallogin')">Login</button>
+          </label>
+          <label class="item item-inline">
+            <button class="button button-block button-positive co" ng-click="go('signup')">Signup</button>
+          </label>
+        </div>
 </div>
   </ion-content>
 </ion-view>
