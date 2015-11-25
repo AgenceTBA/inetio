@@ -21,6 +21,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         },
@@ -88,6 +92,9 @@
             "PACKAGE_NAME": "com.ionicframework.applicationmobile167931"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.applicationmobile167931"
+        },
+        "cordova-plugin-device-motion": {
             "PACKAGE_NAME": "com.ionicframework.applicationmobile167931"
         },
         "cordova-plugin-inappbrowser": {

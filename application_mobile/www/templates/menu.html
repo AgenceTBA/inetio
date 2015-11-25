@@ -17,7 +17,7 @@
 
     <ion-header-bar class="bar-stable">
 
-      <h1 class="title">Left</h1>
+      <h1 class="title">Menu</h1>
 
     </ion-header-bar>
 
@@ -25,17 +25,17 @@
 
       <ion-list>
 
-        <ion-item menu-close ng-click="login()">
-          Login
+        <ion-item menu-close href="#/app/race">
+          Start Race
+        </ion-item>
+        <ion-item menu-close href="#/app/buildrace">
+          Start Race
         </ion-item>
         <ion-item menu-close href="#/app/profil">
           Profil
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item menu-close ng-click="logout()">
+          Logout
         </ion-item>
       </ion-list>
     </ion-content>
