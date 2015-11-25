@@ -132,7 +132,7 @@ angular.module('app')
             zoom: 16,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }; 
-        $scope.map = new google.maps.Map(document.getElementById("map"), $scope.mapOptions); 
+        $scope.map = new google.maps.Map(document.getElementById("maprace"), $scope.mapOptions); 
     }
     $scope.stoploop = function(){
       if (angular.isDefined(mainloop)) {

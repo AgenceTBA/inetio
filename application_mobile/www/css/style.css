@@ -113,6 +113,12 @@
 	position: absolute !important;
 	bottom: 0 !important;
 }
+#maprace{
+	height: 40% !important;
+	width: 100%;
+	position: absolute !important;
+	bottom: 0 !important;
+}
 
 /*** race ***/
 
