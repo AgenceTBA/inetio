@@ -12,8 +12,12 @@ angular.module('app')
     $scope.$on('$ionicView.beforeEnter', function (e, data) {
         $scope.$root.showMenuIcon = false;
     });
+            $scope.load = false
 
     $scope.googleLogin = function() {
+            $scope.load = true
+
+
         $cordovaOauth.google("951692337658-rqcr7022vdhqi5pggau4m2gjdbddsg20.apps.googleusercontent.com", [
             "https://www.googleapis.com/auth/urlshortener",
             "https://www.googleapis.com/auth/userinfo.email"
@@ -42,15 +46,31 @@ angular.module('app')
 
                         Auth.successGoogleAuth(response)
                         .then(function() {
+                            $scope.load = false
                             $state.go('app.main');
                         })
                         .catch(function(err) {
-                            console.log("une  error")
-                            $scope.errors.other = err.message;
+                            $scope.load = false
+                               var alertPopup = $ionicPopup.alert({
+                                title: 'Erreur:',
+                                 template: 'Connexion au serveur impossible'
+                               });
+                               alertPopup.then(function(res) {
+                                    $state.go('app.main')
+                               });  
+                            $state.go('app.login');
                         });
                     }, 
                     function(response) { // optional
-                        console.log("une putain error")
+                        $scope.load = false
+                           var alertPopup = $ionicPopup.alert({
+                            title: 'Erreur:',
+                             template: 'Connexion au serveur impossible'
+                           });
+                           alertPopup.then(function(res) {
+                                $state.go('app.main')
+                           });  
+                        $state.go('app.login');
                     });
             });
 
@@ -61,17 +81,26 @@ angular.module('app')
 
     $scope.localLogin = function() {
         $scope.submitted = true;
-
+        $scope.load = true
         Auth.login({
             email: $scope.user.email,
             password: $scope.user.password
         })
         .then(function() {
             //$scope.state.go('app.main');
+            $scope.load = false
             $state.go('app.main');
         })
         .catch(function(err) {
-            $scope.errors.other = err.message;
+        $scope.load = false
+               var alertPopup = $ionicPopup.alert({
+                title: 'Erreur:',
+                 template: 'Connexion au serveur impossible'
+               });
+               alertPopup.then(function(res) {
+                    $state.go('app.main')
+               });  
+            $state.go('app.login');
         });
     };
 
