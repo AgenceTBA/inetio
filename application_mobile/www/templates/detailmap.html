@@ -6,10 +6,7 @@
       <h1>Global Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email != user.email">
-          <h1>Meilleurs temps:  {{row.bestTime}} </h1>
-          <h1>vMax: {{row.vMax}} </h1>
-          <h1>Nb tours: {{row.round}} </h1>
-          <h1>Pilote: {{row.email}} </h1>
+          <h6>Pilote: {{row.email.split('@')[0]}}  Meilleurs temps:  {{row.bestTime}} vMax: {{row.vMax}} Nb tours: {{row.round}} </h6>
         </ion-item>
       </ion-list>
   </div>
@@ -17,21 +14,12 @@
       <h1>Votre Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email == user.email">
-          <h1>Meilleurs temps:  {{row.bestTime}} </h1>
-          <h1>vMax: {{row.vMax}} </h1>
-          <h1>Nb tours: {{row.round}} </h1>
-          <h1>Pilote: {{row.email}} </h1>
+          <h6>Pilote: {{row.email.split('@')[0]}}  Meilleurs temps:  {{row.bestTime}} vMax: {{row.vMax}} Nb tours: {{row.round}} </h6>
+
         </ion-item>
       </ion-list>
   </div>
 </div>
-
-
-
-
-
-
-
   </ion-content>
     <button ng-click="go('app.racemode')" class="btn-race btn-race-go">Go</button>
     <button ng-click="go('app.main')" class="btn-race btn-race-stop">Annuler</button>
