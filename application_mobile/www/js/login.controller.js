@@ -9,6 +9,10 @@ angular.module('app')
         disableBack: true
     });
 
+    $scope.go = function (url) {
+        $state.go(url)
+    }
+
     $scope.$on('$ionicView.beforeEnter', function (e, data) {
         $scope.$root.showMenuIcon = false;
     });

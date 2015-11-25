@@ -1,0 +1,25 @@
+<img src="img/bg-login.png" class="bg-login" alt="" />
+<ion-view class="modal-login">
+  <ion-content ng-show="load">
+    <img src='./img/load.gif'/>
+  </ion-content>
+
+  <ion-content ng-show="!load">
+    <form ng-submit="doLogin()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="user.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="user.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive co" type="submit" ng-click="localLogin()">Log in</button>
+        </label>
+        <a href="#/signup" class="link-sign">New pilot ? Click Here.</a>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

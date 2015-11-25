@@ -62,6 +62,12 @@ angular.module('app', [
     controller: 'LoginCtrl'
   })
 
+  .state('locallogin', {
+    url: '/locallogin',
+    templateUrl: 'templates/locallogin.html',
+    controller: 'LoginCtrl'
+  })
+
   .state('signup', {
     url: '/signup',
     templateUrl: 'templates/signup.html',
