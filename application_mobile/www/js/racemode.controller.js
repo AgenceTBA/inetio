@@ -196,15 +196,7 @@ angular.module('app')
 
         $scope.map.panTo($scope.myLatlng);
             $rootScope.currentLocation = latlong;
-        }, function(err) {});
-
-
-
-
-
-
-
-        
+        }, function(err) {});       
         },1000);
     };
     $scope.$on('$destroy', function() {
@@ -219,22 +211,10 @@ angular.module('app')
       Auth.logout()
       $state.go("login")
     }
-    $scope.chosenRace = function (_idCircuit) {
-      $http.get('http://inetio.coolcode.fr/api/circuits/'+ _idCircuit).then(function (res){
-        $localStorage.raceMode = {
-          infoCircuit: res.data
-        }
-        $state.go('app.racemode')
-      })
-    }
-    //MAIN DE LA PAGE
-    $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
-      $scope.listCircuit = res.data
-    });
     //INIT DE LA MAP
-      $scope.getStartingPoint(function (pos){
-        $scope.initialisationMap(pos)
-      })
+  $scope.getStartingPoint(function (pos){
+    $scope.initialisationMap(pos)
+  })
 
 
 });

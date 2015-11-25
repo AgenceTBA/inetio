@@ -143,6 +143,13 @@ angular.module('app')
         var value = (currentUser.hasOwnProperty('$promise')) ? currentUser.$promise : currentUser;
         return $q.when(value)
           .then(function(user) {
+            if (!user.google){
+              user.google = {
+                image: {
+                  url: './img/helmet.png'
+                }
+              }
+            }
             safeCb(callback)(user);
             return user;
           }, function() {

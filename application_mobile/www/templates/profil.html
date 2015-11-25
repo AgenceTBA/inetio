@@ -1,4 +1,4 @@
-<div class="bg-race profil">
+<div class="bg-race profil" ng-if="user.google.displayName">
     <div>
         <h3 style="color: black">{{user.google.displayName}}test</h3>
     </div>
@@ -29,5 +29,37 @@
     <div class="button-profil">
         <button type="button" ng-click="ok()">OK</button>
         <button type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+<div class="bg-race profil" ng-if="!user.google.displayName">
+    <div>
+        <h3 style="color: black">{{user.nom}} {{user.prenom}}</h3>
+    </div>
+    <div >
+        <ul>
+            <li><label>Email: {{user.email}}</label></li>
+            <li><label>Sexe: {{user.sexe}}</label></li>
+        </ul>
+        <h6>Liste des circuits auquels à participé: {{user.nom}} {{user.prenom}}</h6>
+        <p ng-if="user.sessions.length == 0">{{user.nom}} {{user.prenom}} n a participé à aucune course </p>
+        <table style="width:100%" ng-if="user.sessions.length != 0">
+          <tr >
+            <td>Date</td>
+            <td>Meilleurs Temps</td> 
+            <td>Vitesse Maximum</td>
+            <td>Nombre de tour</td>
+            <td>Angle de plus élevé</td>
+          </tr>
+          <tr ng-repeat="s in user.sessions">
+            <td>{{s.date}}</td>
+            <td>{{s.bestTime}}</td>
+            <td>{{s.vMax}}</td> 
+            <td>{{s.round}}</td>
+            <td>{{s.bestAngler}}</td>
+          </tr>
+        </table>
+    </div>
+    <div class="button-profil">
+        <button type="button" ng-click="go('app.main')">Retour</button>
     </div>
 </div>

@@ -1,18 +1,40 @@
 <ion-view view-title="" class="bg-race">
   <ion-content>
     <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
-    <div ng-repeat="row in allSessionInThisCircuit" ng-if="row.bestTime">
-      {{row}}
-      <h1 class="chrono">Meilleurs temps:  {{row.bestTime}} </h1>
-      <h1>vMax: {{row.vMax}} </h1>
-      <h1>Nb tours: {{row.round}} </h1>
+<div class="row">
+  <div class="col">
+      <h1>Global Record</h1>
+      <ion-list>
+        <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email != user.email">
+          <h1>Meilleurs temps:  {{row.bestTime}} </h1>
+          <h1>vMax: {{row.vMax}} </h1>
+          <h1>Nb tours: {{row.round}} </h1>
+          <h1>Pilote: {{row.email}} </h1>
+        </ion-item>
+      </ion-list>
+  </div>
+  <div class="col">
+      <h1>Votre Record</h1>
+      <ion-list>
+        <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email == user.email">
+          <h1>Meilleurs temps:  {{row.bestTime}} </h1>
+          <h1>vMax: {{row.vMax}} </h1>
+          <h1>Nb tours: {{row.round}} </h1>
+          <h1>Pilote: {{row.email}} </h1>
+        </ion-item>
+      </ion-list>
+  </div>
+</div>
 
-    </div>
 
-    <button ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
-    <button ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
+
+
+
+
+
   </ion-content>
-
+    <button ng-click="go('app.racemode')" class="btn-race btn-race-go">Go</button>
+    <button ng-click="go('app.main')" class="btn-race btn-race-stop">Annuler</button>
 </ion-view>
 
 
