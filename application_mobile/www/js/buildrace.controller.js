@@ -149,45 +149,15 @@ $scope.showAlert = function() {
   }, 30000);
  };
 
- $scope.showAlert2 = function() {
-    //verif si user a bien fait un tour
-    if ($scope.session.round > 0){
-       var alertPopup = $ionicPopup.alert({
-         title: 'Vous avez mis fin à votre session',
-         template: 'Bravo, votre course vient d etre sauvegarder'
-       });
-       alertPopup.then(function(res) {
-        $http({
-            url: 'http://inetio.coolcode.fr/api/circuit',
-            method: "POST",
-            data: $scope.session
-        })
-        .then(function(response) {
-            console.log('upload api ok')
-            $state.go('app.main')
-        }, 
-        function(response) { // optional
-            console.log('upload api pas ok')
-            $state.go('app.main')
-        });
-       });        
-    } else {
-       var alertPopup = $ionicPopup.alert({
-         title: 'Vous avez mis fin à votre session',
-         template: 'Oh, meme pas un tour de fait ?? Je n enregistre pas ça'
-       });
-       alertPopup.then(function(res) {
-            $state.go('app.main')
-       });  
-    }
- };
-
 
     $scope.stopRecord = function () {
         $scope.stoploop()
         $scope.stopTimer()
         $scope.session.isDrag = true
+      $scope.getStartingPoint(function (pos){
+        $scope.session.end = pos
         $scope.showAlert()
+      })
     }
     $scope.start = function () {
         $scope.session = {
@@ -196,7 +166,8 @@ $scope.showAlert = function() {
             bestTime: 0,
             vMax: 0,
             bestAngler: 0,
-            isBuildRace: true
+            isBuildRace: true,
+            end: {}
         }
       //ON RECUPERE LE POINT DE DEPART
       $scope.getStartingPoint(function (pos){

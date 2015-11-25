@@ -188,11 +188,7 @@ angular.module('app')
         } else {}
         $scope.myLatlng = new google.maps.LatLng($scope.latitude, $scope.longitude);
         
-        $scope.marker = new google.maps.Marker({
-            position: $scope.myLatlng,
-            map: $scope.map,
-            icon: './img/circle.png'
-        });
+
 
         $scope.map.panTo($scope.myLatlng);
             $rootScope.currentLocation = latlong;
@@ -228,9 +224,7 @@ angular.module('app')
       })
     }
     //MAIN DE LA PAGE
-    $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
-      $scope.listCircuit = res.data
-    });
+
     //INIT DE LA MAP
       $scope.getStartingPoint(function (pos){
         $scope.initialisationMap(pos)
@@ -244,6 +238,27 @@ $localStorage.raceMode = {
 */
 console.log($localStorage.raceMode)
 
+            $scope.flightPath = new google.maps.Polyline({
+                map: $scope.map,
+                path: $localStorage.raceMode.infoCircuit.parcours,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+              });
+
+            $scope.marker = new google.maps.Marker({
+                position: new google.maps.LatLng($localStorage.raceMode.infoCircuit.center.latitude, $localStorage.raceMode.infoCircuit.center.longitude),
+                map: $scope.map,
+                icon: './img/circle.png'
+            });
+
+
+
+    $http.get('http://inetio.coolcode.fr/api/race_sessions/' + $localStorage.raceMode.infoCircuit._id).then(function (res){
+      $scope.allSessionInThisCircuit = res.data
+console.log($scope.allSessionInThisCircuit)
+    });
 
 
 

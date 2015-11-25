@@ -71,7 +71,14 @@ RaceSession.find({email: req.query.email}, function (err, comms) {
 
 // Gets a single RaceSession from the DB
 exports.show = function (req, res) {
-  RaceSession.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(responseWithResult(res))['catch'](handleError(res));
+//  RaceSession.findByIdAsync(req.params.id).then(handleEntityNotFound(res)).then(responseWithResult(res))['catch'](handleError(res));
+RaceSession.find({idCircuit: req.params.id}, function (err, comms) {
+  if (err) { throw err; }
+  // comms est un tableau de hash
+  console.log(comms);
+  res.send(comms)
+});
+
 };
 
 // Creates a new RaceSession in the DB

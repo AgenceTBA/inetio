@@ -54,11 +54,7 @@ angular.module('app', [
     controller: 'AppCtrl'
   })
 
-  .state('detailmap', {
-    url: '/detailmap',
-    templateUrl: 'templates/detailmap.html',
-    controller: 'DetailMapCtrl'
-  })
+
 
   .state('login', {
     url: '/login',
@@ -71,7 +67,15 @@ angular.module('app', [
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
   })
-  
+    .state('app.detailmap', {
+    url: '/detailmap',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/detailmap.html',
+        controller: 'DetailMapCtrl'
+      }
+    }
+  })
   .state('app.profil', {
     url: '/profil',
     views: {

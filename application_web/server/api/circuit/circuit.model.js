@@ -10,6 +10,10 @@ var CircuitSchema = new Schema({
 		longitude: Number,
 		latitude: Number
 	},
+	end: {
+		longitude: Number,
+		latitude: Number
+	},	
     parcours: [{
       lng: Number,
       lat: Number
