@@ -274,12 +274,23 @@
 	padding-left: 0;
 }
 
-
 .signin label input::-webkit-input-placeholder {
    color: rgba(255,255,255,0.75);
 }
 
-
 .signin label{
 	border-color: #000;
+}
+
+/*** detailmap ***/
+
+.detail-map-record .item{
+	background-color: rgba(0,0,0,0.75);
+	border-color: #000;
+	width: 95%;
+	white-space: normal;
+}
+
+.detail-map-record .item h6{
+	color: #fff !important;
 }

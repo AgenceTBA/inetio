@@ -2,19 +2,19 @@
   <ion-content>
     <div id="map" style= " height : 200px; " data-tap-disabled="true"></div>
 <div class="row">
-  <div class="col">
+  <div class="col detail-map-record">
       <h1>Global Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email != user.email">
-          <h6>Pilote: {{row.email.split('@')[0]}}  Meilleurs temps:  {{row.bestTime}} vMax: {{row.vMax}} Nb tours: {{row.round}} </h6>
+          <h6>Pilote: {{row.email.split('@')[0]}}<br/> Meilleurs temps:  {{row.bestTime}}<br/> vMax: {{row.vMax}}<br/> Nb tours: {{row.round}} </h6>
         </ion-item>
       </ion-list>
   </div>
-  <div class="col">
+  <div class="col detail-map-record">
       <h1>Votre Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email == user.email">
-          <h6>Pilote: {{row.email.split('@')[0]}}  Meilleurs temps:  {{row.bestTime}} vMax: {{row.vMax}} Nb tours: {{row.round}} </h6>
+          <h6>Pilote: {{row.email.split('@')[0]}}<br/> Meilleurs temps:  {{row.bestTime}}<br/> vMax: {{row.vMax}}<br/> Nb tours: {{row.round}} </h6>
 
         </ion-item>
       </ion-list>
