@@ -46,15 +46,18 @@ angular.module('applicationWebApp')
       })
     });
   }
-
   $scope.saveNewMap = function (adresse) {
     Geocoder.geocodeAddress(adresse).then(function(latlng){
       $http.post('/api/circuits', {
           nom: adresse,
+          auteur: "Administrateur",
+          isDrag: false,
+          isBuildRace: false,
           center: {
             longitude: latlng.lng,
             latitude: latlng.lat,
-          }
+          },
+
       });
       $scope.randomMarkersAdd = [];
       $scope.updateMainMap()
