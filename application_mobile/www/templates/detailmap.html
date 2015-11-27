@@ -13,14 +13,14 @@
   <div class="col detail-map-record">
       <h1>Your Record</h1>
       <ion-list>
-        <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email == user.email">
+        <ion-item ng-repeat="row in allSessionInThisCircuit track by $id | orderBy:'bestTime'" ng-if="row.email && row.email == user.email && $id == 0">
           <h6>Pilot: {{row.email.split('@')[0]}}<br/> Best time:  {{row.bestTime}}<br/> MaxSpeed: {{row.vMax}}<br/> Round: {{row.round}} </h6>
         </ion-item>
       </ion-list>
   </div>
 </div>
 <div class="row">
-            <h1 ng-if ='distanceMap != 0'> Distance :{{distanceMap}}</h1>
+            <h1 ng-if ='distanceMap && distanceMap != 0'> Distance :{{distanceMap}}</h1>
 
 </div>
     <button ng-click="go('app.racemode')" class="btn-race btn-race-go">Go</button>

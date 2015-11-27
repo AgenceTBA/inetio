@@ -117,6 +117,7 @@ angular.module('app')
     }
     $scope.start = function () {
         $scope.session = {
+            nom: $localStorage.raceMode.infoCircuit.nom,
             email: $scope.user.email,
             round: 0,
             bestTime: 0,

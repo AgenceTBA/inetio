@@ -33,13 +33,13 @@ angular.module('app')
         $state.go('app.detailmap')
       });
     }
-
+$scope.$on('$ionicView.enter', function() {
     //MAIN DE LA PAGE
     $http.get('http://inetio.coolcode.fr/api/circuits').then(function (res){
       $scope.CircuitComplete = res.data;
       $scope.filterByPostion();
     });
-
+})
 
     $scope.filterByPostion = function(){
         Utils.getPosition(function(coord) {
