@@ -10,7 +10,8 @@ angular.module('app', [
   'ngResource',
   'ngCookies',
   'ngStorage',
-  'angular-chrono'
+  'angular-chrono',
+  'ngIOS9UIWebViewPatch'
     ])
 
 .run(function($rootScope, $ionicPlatform, Auth, $state) {
@@ -53,9 +54,6 @@ angular.module('app', [
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
-
-
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',

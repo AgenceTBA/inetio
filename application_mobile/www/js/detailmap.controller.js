@@ -51,6 +51,7 @@ $scope.$on('$ionicView.enter', function() {
                 strokeWeight: 2
               })
             $http.get('http://inetio.coolcode.fr/api/circuits/' + $localStorage.raceMode.infoCircuit._id).then(function (circuitRes){
+                $scope.initialisationMap({latitude:circuitRes.data.center.latitude ,longitude: circuitRes.data.center.longitude})
                 $scope.marker = new google.maps.Marker({
                     position: new google.maps.LatLng(circuitRes.data.center.latitude, circuitRes.data.center.longitude),
                     map: $scope.map,
