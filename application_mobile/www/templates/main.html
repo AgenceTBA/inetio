@@ -6,9 +6,9 @@
         <div ng-if ="!user.google">{{user.image}}</div>
         <h1>Welcome {{user.email}}</h1>
 
-        <button class="button button-block button-positive" ng-click="go('app.race')">Start a Race</button>
-        <button class="button button-block button-positive" ng-click="go('app.profil')">Profil</button>
-        <button class="button button-block button-positive" ng-click="go('app.buildrace')">Build a race</button>
+        <a class="button button-block button-positive" href="#/app/race">Start a Race</a>
+        <a class="button button-block button-positive" href="#/app/profil">Profil</a>
+        <a class="button button-block button-positive" href="#/app/buildrace">Build a race</a>
         
       </center>
     </ion-list>
