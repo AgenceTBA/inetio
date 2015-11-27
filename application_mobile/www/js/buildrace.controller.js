@@ -53,13 +53,13 @@ $scope.showAlert = function() {
   // An elaborate, custom popup
   var myPopup = $ionicPopup.show({
     template: '<input type="text" ng-model="data.nom">',
-    title: 'Nom',
-    subTitle: 'Entrez un nom pour ce circuit',
+    title: 'Name',
+    subTitle: 'Enter a name for this track',
     scope: $scope,
     buttons: [
       { text: 'Cancel' },
       {
-        text: '<b>Sauvergarder</b>',
+        text: '<b>Save</b>',
         type: 'button-positive',
         onTap: function(e) {
           if (!$scope.data.nom) {
@@ -87,8 +87,8 @@ $scope.showAlert = function() {
     })
     .then(function(response) {
        var alertPopup = $ionicPopup.alert({
-        title: 'Vous avez mis fin à votre session',
-         template: 'C est dans la boite :D'
+        title: 'You ended the session',
+         template: 'The session is succefully saved : D'
        });
        alertPopup.then(function(res) {
             $state.go('app.main')
@@ -96,8 +96,8 @@ $scope.showAlert = function() {
     }, 
     function(response) { // optional
        var alertPopup = $ionicPopup.alert({
-         title: 'Un probleme est survenue',
-         template: 'Aie aie, désole on a un probleme'
+         title: 'Something wrong happen',
+         template: 'We are truly sorry ... :('
        });
        alertPopup.then(function(res) {
             $state.go('app.main')

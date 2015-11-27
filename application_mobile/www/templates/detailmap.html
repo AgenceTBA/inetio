@@ -6,26 +6,25 @@
       <h1>Global Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email != user.email">
-          <h6>Pilote: {{row.email.split('@')[0]}}<br/> Meilleurs temps:  {{row.bestTime}}<br/> vMax: {{row.vMax}}<br/> Nb tours: {{row.round}} </h6>
+          <h6>Pilot: {{row.email.split('@')[0]}}<br/> Best time:  {{row.bestTime}}<br/> MaxSpeed: {{row.vMax}}<br/> Round: {{row.round}} </h6>
         </ion-item>
       </ion-list>
   </div>
   <div class="col detail-map-record">
-      <h1>Votre Record</h1>
+      <h1>Your Record</h1>
       <ion-list>
         <ion-item ng-repeat="row in allSessionInThisCircuit | orderBy:'bestTime'" ng-if="row.email && row.email == user.email">
-          <h6>Pilote: {{row.email.split('@')[0]}}<br/> Meilleurs temps:  {{row.bestTime}}<br/> vMax: {{row.vMax}}<br/> Nb tours: {{row.round}} </h6>
-
+          <h6>Pilot: {{row.email.split('@')[0]}}<br/> Best time:  {{row.bestTime}}<br/> MaxSpeed: {{row.vMax}}<br/> Round: {{row.round}} </h6>
         </ion-item>
       </ion-list>
   </div>
 </div>
 <div class="row">
-            <h1 ng-if ='distanceMap != 0'> Distance:{{distanceMap}}</h1>
+            <h1 ng-if ='distanceMap != 0'> Distance :{{distanceMap}}</h1>
 
 </div>
     <button ng-click="go('app.racemode')" class="btn-race btn-race-go">Go</button>
-    <button ng-click="go('app.main')" class="btn-race btn-race-stop">Annuler</button>
+    <button ng-click="go('app.main')" class="btn-race btn-race-stop">Cancel</button>
   </ion-content>
 
 

@@ -2,7 +2,7 @@
   <ion-content>
     <ion-list>
       <center>
-        <div ng-if ="user.google"> <img src="{{user.google.image.url}}" /> </div>
+        <div ng-if ="user.google"> <img style="border-radius: 25%;" src="{{user.google.image.url}}" /> </div>
         <div ng-if ="!user.google">{{user.image}}</div>
         <h1>Welcome {{user.email}}</h1>
 

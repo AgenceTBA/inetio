@@ -72,8 +72,8 @@ angular.module('app')
     //verif si user a bien fait un tour
     //if ($scope.session.round > 0){
        var alertPopup = $ionicPopup.alert({
-         title: 'Vous avez mis fin à votre session',
-         template: 'Bravo, votre course vient d etre sauvegarder'
+        title: 'You ended the session',
+         template: 'This track is succefully saved : D'
        });
        alertPopup.then(function(res) {
         $http({
@@ -82,11 +82,9 @@ angular.module('app')
             data: $scope.session
         })
         .then(function(response) {
-            console.log('upload api ok')
             $state.go('app.main')
         }, 
         function(response) { // optional
-            console.log('upload api pas ok')
             $state.go('app.main')
         });
        });        

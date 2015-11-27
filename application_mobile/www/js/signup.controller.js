@@ -4,7 +4,7 @@ angular.module('app')
   .controller('SignupCtrl', function($scope, Auth, $state) {
     $scope.form = {};
     $scope.errors = {};
-    $scope.form.sexe = 'homme'
+    $scope.form.sexe = 'men'
     $scope.register = function(form) {
 
       console.log(form);

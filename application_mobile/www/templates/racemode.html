@@ -3,10 +3,10 @@
     <h1 class="chrono"> {{counter  | secondsToDateTime | date:'HH:mm:ss'}} </h1>
     <h1>Current Speed : {{session.vMax}}</h1>
     <h1>Current Lap : {{session.round}}</h1>
-    <h1>BEST ANGLE X : {{session.bestAngler}}</h1>
+    <h1>Best angle: {{session.bestAngler}}</h1>
     <button ng-show="startStop" ng-click="record();startStop = !startStop" class="btn-race btn-race-go">Go</button>
     <button ng-show="!startStop" ng-click="stopRecord();startStop = !startStop" class="btn-race btn-race-stop">Stop</button>
-    <button ng-show="startStop" ng-click="go('app.main')" class="btn-race btn-race-stop">Annuler</button>
+    <button ng-show="startStop" ng-click="go('app.main')" class="btn-race btn-race-stop">Cancel</button>
     <div id="maprace" style= " height : 200px; " data-tap-disabled="true"></div>
   </ion-content>
 
