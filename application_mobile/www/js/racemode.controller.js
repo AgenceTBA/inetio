@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('RaceModeCtrl', function(Utils,$timeout, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
+.controller('RaceModeCtrl', function(Utils,$timeout, $ionicHistory, $interval, $scope, Auth, $state, $http, $cordovaGeolocation, $localStorage, chronoService, $ionicLoading,$rootScope, $ionicPopup, $timeout,$cordovaDeviceMotion) {
     //VARIABLE GLOBAL
 
     var TOLERANCE = 1
@@ -82,9 +82,15 @@ angular.module('app')
             data: $scope.session
         })
         .then(function(response) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $state.go('app.main')
         }, 
         function(response) { // optional
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $state.go('app.main')
         });
        });        
@@ -95,6 +101,9 @@ angular.module('app')
          template: 'Oh, meme pas un tour de fait ?? Je n enregistre pas ça'
        });
        alertPopup.then(function(res) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $state.go('app.main')
        });  
     }

@@ -11,7 +11,7 @@
         <p ng-if="user.sessions.length == 0">{{user.google.displayName}} didn't race.</p>
           <ion-list ng-if="user.sessions.length != 0">
             <ion-item ng-repeat="s in user.sessions" style="background-color: black;color: white;" ng-if="s.round >= 0">
-              <h6>Best time:  {{s.bestTime}}<br/> MaxSpeed: {{s.vMax}}<br/> Round: {{s.round}} </h6>
+              <h6>Name: {{s.nom}} Best time:  {{s.bestTime}}<br/> MaxSpeed: {{s.vMax}}<br/> Round: {{s.round}} </h6>
             </ion-item>
           </ion-list>
     </div>
@@ -33,7 +33,7 @@
         <p ng-if="user.sessions.length == 0">{{user.nom}} {{user.prenom}} didn't race.</p>
           <ion-list ng-if="user.sessions.length != 0">
             <ion-item ng-repeat="s in user.sessions" style="background-color: black;color: white;" ng-if="s.round >= 0">
-              <h6>Best time:  {{s.bestTime}}<br/> MaxSpeed: {{s.vMax}}<br/> Round: {{s.round}} </h6>
+              <h6>Name: {{s.nom}} Best time:  {{s.bestTime}}<br/> MaxSpeed: {{s.vMax}}<br/> Round: {{s.round}} </h6>
             </ion-item>
           </ion-list>
     </div>
