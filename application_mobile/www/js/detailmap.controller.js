@@ -37,6 +37,7 @@ angular.module('app')
     } 
     $http.get('http://inetio.coolcode.fr/api/race_sessions/' + $localStorage.raceMode.infoCircuit._id).then(function (res){
       $scope.allSessionInThisCircuit = res.data
+      console.log($scope.allSessionInThisCircuit )
           $scope.getStartingPoint(function (pos){
             $scope.initialisationMap(pos)
             $scope.distanceMap = Utils.getDistanceDisplay($scope.fullDistance($localStorage.raceMode.infoCircuit.parcours))

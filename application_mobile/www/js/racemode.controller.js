@@ -70,7 +70,7 @@ angular.module('app')
  // An alert dialog
  $scope.showAlert = function() {
     //verif si user a bien fait un tour
-    if ($scope.session.round > 0){
+    //if ($scope.session.round > 0){
        var alertPopup = $ionicPopup.alert({
          title: 'Vous avez mis fin à votre session',
          template: 'Bravo, votre course vient d etre sauvegarder'
@@ -90,6 +90,7 @@ angular.module('app')
             $state.go('app.main')
         });
        });        
+    /*
     } else {
        var alertPopup = $ionicPopup.alert({
          title: 'Vous avez mis fin à votre session',
@@ -99,6 +100,7 @@ angular.module('app')
             $state.go('app.main')
        });  
     }
+    */
  };
 
     $scope.stopRecord = function () {
@@ -112,7 +114,8 @@ angular.module('app')
             round: 0,
             bestTime: 0,
             vMax: 0,
-            bestAngler: 0
+            bestAngler: 0,
+            idCircuit: $localStorage.raceMode.infoCircuit._id
         }
       //ON RECUPERE LE POINT DE DEPART
       Utils.getPosition(function (pos){
